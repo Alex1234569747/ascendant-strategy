@@ -27,21 +27,30 @@ export default async function handler(req, res) {
   
   let plan = ''
   let email = ''
+  let debug = {}
   
   const rawBody = req.body
   if (rawBody && typeof rawBody === 'object') {
     const keys = Object.keys(rawBody)
     if (keys.length === 1) {
-      // Unescape the key (Vercel double-escapes)
-      let jsonStr = keys[0]
-        .replace(/\\"/g, '"')
-        .replace(/\\\\/g, '\\')
+      const jsonKey = keys[0]
       
-      try {
-        const parsed = JSON.parse(jsonStr)
-        plan = parsed.plan || ''
-        email = parsed.customerEmail || parsed.email || ''
-      } catch (e) {}
+      // Try multiple unescape approaches
+      let jsonStr1 = jsonKey.replace(/\\"/g, '"')
+      let jsonStr2 = jsonStr1.replace(/\\\\/g, '\\')
+      let jsonStr3 = jsonKey.replace(/\\\\"/g, '"')
+      
+      debug = {
+        original: jsonKey,
+        len: jsonKey.length,
+        chars: jsonKey.split('').slice(0, 20)
+      }
+      
+      // Try parsing different versions
+      try { const p = JSON.parse(jsonKey); plan = p.plan || ''; email = p.customerEmail || p.email || '' } catch (e) {}
+      if (!plan) try { const p = JSON.parse(jsonStr1); plan = p.plan || ''; email = p.customerEmail || p.email || '' } catch (e) {}
+      if (!plan) try { const p = JSON.parse(jsonStr2); plan = p.plan || ''; email = p.customerEmail || p.email || '' } catch (e) {}
+      if (!plan) try { const p = JSON.parse(jsonStr3); plan = p.plan || ''; email = p.customerEmail || p.email || '' } catch (e) {}
     }
   }
   
@@ -50,8 +59,8 @@ export default async function handler(req, res) {
     return res.json({ 
       status: 'ok',
       plan: plan,
-      email: email,
-      success: plan === 'full'
+      success: !!plan,
+      debug: debug
     })
   }
   
