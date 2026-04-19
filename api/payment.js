@@ -25,32 +25,28 @@ export default async function handler(req, res) {
 
   const pathname = req.url || ''
   
-  // ALWAYS show raw req.body for debugging
-  const rawBody = req.body
-  
-  // Parse plan from req.body directly  
+  // Parse body - handle the Vercel quirk where body is {"key": value}
   let plan = ''
   let email = ''
   
-  if (rawBody) {
-    // String case
-    if (typeof rawBody === 'string') {
+  const rawBody = req.body
+  if (rawBody && typeof rawBody === 'object') {
+    const keys = Object.keys(rawBody)
+    if (keys.length === 1) {
+      // Get the key which is the JSON payload
+      const jsonKey = keys[0]
       try {
-        const parsed = JSON.parse(rawBody)
+        // Parse the key as JSON
+        const parsed = JSON.parse(jsonKey)
         plan = parsed.plan || ''
         email = parsed.customerEmail || parsed.email || ''
-      } catch (e) {}
-    }
-    // Object case - Vercel quirk
-    else if (typeof rawBody === 'object') {
-      // Get the only key and try to parse it
-      const keys = Object.keys(rawBody)
-      if (keys.length > 0) {
-        try {
-          const parsed = JSON.parse(keys[0])
-          plan = parsed.plan || ''
-          email = parsed.customerEmail || parsed.email || ''
-        } catch (e) {}
+      } catch (e) {
+        // If parsing key fails, try value
+        const val = rawBody[jsonKey]
+        if (typeof val === 'object') {
+          plan = val.plan || ''
+          email = val.customerEmail || val.email || ''
+        }
       }
     }
   }
@@ -61,9 +57,7 @@ export default async function handler(req, res) {
       status: 'ok',
       plan: plan,
       email: email,
-      rawType: typeof rawBody,
-      rawKeys: typeof rawBody === 'object' ? Object.keys(rawBody || {}) : 'not object',
-      rawFirst: typeof rawBody === 'object' && rawBody ? Object.keys(rawBody)[0] : 'no body'
+      parsed: plan ? 'SUCCESS' : 'FAILED'
     })
   }
   
