@@ -110,13 +110,15 @@ export default function Payment() {
     setLoading(true)
     setError('')
 
+    const API_URL = import.meta.env.PROD ? '' : 'http://localhost:5000'
+
     try {
-      const response = await fetch('/api/create-checkout', {
+      const response = await fetch(`${API_URL}/api/payment/create-checkout`, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ 
           plan: plan.id,
-          email: email || undefined
+          customerEmail: email || undefined
         })
       })
 
@@ -130,7 +132,7 @@ export default function Payment() {
       }
     } catch (err) {
       console.error('Checkout error:', err)
-      setError('Failed to connect to payment server: ' + err.message)
+      setError('Failed to connect to payment server. Please try again.')
       setLoading(false)
     }
   }
