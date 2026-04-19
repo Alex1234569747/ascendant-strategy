@@ -15,23 +15,22 @@ const PLAN_NAMES = {
 }
 
 function parseBody(body) {
-  // Handle the weird Vercel double-parse issue
-  // Body comes as: {"{\"plan\":\"full\"}": ""} where the key is a JSON string
-  if (body && typeof body === 'object' && !Array.isArray(body)) {
+  // Handle Vercel quirk where JSON body becomes {"{\"plan\":\"full\"}": ""}
+  if (!body) return {}
+  
+  if (typeof body === 'string') {
+    try { return JSON.parse(body) } catch (e) { return {} }
+  }
+  
+  if (typeof body === 'object' && !Array.isArray(body)) {
     const keys = Object.keys(body)
-    
     if (keys.length === 1) {
       const key = keys[0]
-      // Try to parse the key as JSON - it contains our data
-      try {
-        const parsed = JSON.parse(key)
-        return parsed
-      } catch (e) {
-        // Not JSON, return as is
-        return body
+      // Key looks like JSON, parse it
+      if (key.includes('{')) {
+        try { return JSON.parse(key) } catch (e) {}
       }
     }
-    
     return body
   }
   
@@ -48,9 +47,8 @@ export default async function handler(req, res) {
   }
 
   const pathname = req.url || ''
-  
   const body = parseBody(req.body)
-  const plan = body.plan || ''
+  const plan = body.plan || body.planId || ''
   const email = body.customerEmail || body.email || ''
   
   // Test endpoint
@@ -58,8 +56,9 @@ export default async function handler(req, res) {
     return res.json({ 
       status: 'ok', 
       plan: plan,
-      email: email,
-      body: body
+      bodyType: typeof body,
+      body: body,
+      reqBody: req.body
     })
   }
   
