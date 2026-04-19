@@ -11,6 +11,7 @@ const NAV_LINKS = [
 ]
 
 export default function Landing() {
+  // Ascendant Strategy - Premium Funnel Agency
   const [scrolled, setScrolled] = useState(false)
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false)
   const [activeSection, setActiveSection] = useState('hero')
