@@ -32,23 +32,20 @@ export default async function handler(req, res) {
   if (rawBody && typeof rawBody === 'object') {
     const keys = Object.keys(rawBody)
     if (keys.length === 1) {
+      // The key is something like: "{\"plan\":\"full\"}"
+      // Try to extract plan value using regex
       const key = keys[0]
       
-      // Unescape manually - split and join
-      const unescaped = key.split('\\"').join('"')
+      // Match "plan":"value" where value is between quotes
+      const planMatch = key.match(/"plan"\s*:\s*"([^"]+)"/)
+      if (planMatch) {
+        plan = planMatch[1]
+      }
       
-      try {
-        const parsed = JSON.parse(unescaped)
-        plan = parsed.plan || ''
-        email = parsed.customerEmail || parsed.email || ''
-      } catch (e) {
-        // Try one more time with different approach
-        try {
-          const unescaped2 = unescaped.replace(/\\\\/g, '\\')
-          const parsed2 = JSON.parse(unescaped2)
-          plan = parsed2.plan || ''
-          email = parsed2.customerEmail || parsed2.email || ''
-        } catch (e2) {}
+      // Match "customerEmail":"value" or "email":"value"
+      const emailMatch = key.match(/"(customerEmail|email)"\s*:\s*"([^"]+)"/)
+      if (emailMatch) {
+        email = emailMatch[2]
       }
     }
   }
