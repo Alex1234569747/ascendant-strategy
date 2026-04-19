@@ -27,7 +27,6 @@ export default async function handler(req, res) {
   
   let plan = ''
   let email = ''
-  let parsed = null
   
   const rawBody = req.body
   if (rawBody && typeof rawBody === 'object') {
@@ -35,14 +34,22 @@ export default async function handler(req, res) {
     if (keys.length === 1) {
       const key = keys[0]
       
-      // Unescape: "{\"plan\":\"full\"}" → {"plan":"full"}
-      const unescaped = key.replace(/\\"/g, '"')
+      // Unescape manually - split and join
+      const unescaped = key.split('\\"').join('"')
       
       try {
-        parsed = JSON.parse(unescaped)
+        const parsed = JSON.parse(unescaped)
         plan = parsed.plan || ''
         email = parsed.customerEmail || parsed.email || ''
-      } catch (e) {}
+      } catch (e) {
+        // Try one more time with different approach
+        try {
+          const unescaped2 = unescaped.replace(/\\\\/g, '\\')
+          const parsed2 = JSON.parse(unescaped2)
+          plan = parsed2.plan || ''
+          email = parsed2.customerEmail || parsed2.email || ''
+        } catch (e2) {}
+      }
     }
   }
   
@@ -51,8 +58,7 @@ export default async function handler(req, res) {
     return res.json({ 
       status: 'ok',
       plan: plan,
-      parsed: parsed,
-      success: !!parsed
+      success: plan === 'full'
     })
   }
   
