@@ -110,16 +110,10 @@ export default function Payment() {
     setLoading(true)
     setError('')
 
-    const API_URL = import.meta.env.PROD ? '' : 'http://localhost:5000'
-
     try {
-      const response = await fetch(`${API_URL}/api/payment/create-checkout`, {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ 
-          plan: plan.id,
-          customerEmail: email || undefined
-        })
+      const response = await fetch(`/api/payment/create-checkout?plan=${plan.id}`, {
+        method: 'GET',
+        headers: { 'Content-Type': 'application/json' }
       })
 
       const data = await response.json()
@@ -139,7 +133,6 @@ export default function Payment() {
 
   return (
     <div style={{ minHeight: '100vh', background: '#fafafa', color: '#18181b' }}>
-      {/* Header */}
       <nav style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', padding: '1.25rem 2rem', background: '#fff', borderBottom: '1px solid rgba(0,0,0,0.05)' }}>
         <Link to="/" style={{ display: 'flex', alignItems: 'center', gap: '0.5rem', textDecoration: 'none', color: '#18181b', fontFamily: 'Space Grotesk, sans-serif', fontSize: '1.2rem', fontWeight: 700 }}>
           <span style={{ color: '#dc2626' }}>▲</span> Ascendant Strategy
@@ -151,7 +144,6 @@ export default function Payment() {
       </nav>
 
       <div style={{ maxWidth: '1000px', margin: '0 auto', padding: '3rem 1.5rem' }}>
-        {/* Page Title */}
         <div style={{ textAlign: 'center', marginBottom: '2rem' }}>
           <div style={{ 
             background: plan.id === 'full' ? '#dc2626' : 'rgba(220, 38, 38, 0.1)',
@@ -161,9 +153,7 @@ export default function Payment() {
             fontSize: '0.8rem',
             fontWeight: 600,
             display: 'inline-block',
-            marginBottom: '1rem',
-            textTransform: 'uppercase',
-            letterSpacing: '0.05em'
+            marginBottom: '1rem'
           }}>
             {plan.tagline}
           </div>
@@ -175,7 +165,6 @@ export default function Payment() {
           </p>
         </div>
 
-        {/* Spots Left Warning */}
         {plan.spotsLeft <= 4 && (
           <div style={{ 
             background: 'rgba(220, 38, 38, 0.1)', 
@@ -191,11 +180,8 @@ export default function Payment() {
           </div>
         )}
 
-        {/* Main Content */}
         <div style={{ display: 'grid', gridTemplateColumns: '1.2fr 1fr', gap: '2.5rem' }}>
-          {/* Left: Order Summary */}
           <div style={{ background: '#fff', borderRadius: '24px', padding: '2.5rem', border: '1px solid rgba(0,0,0,0.08)' }}>
-            {/* Savings Badge */}
             <div style={{ 
               background: '#dc2626',
               color: '#fff',
@@ -212,7 +198,6 @@ export default function Payment() {
             <h2 style={{ fontSize: '1.4rem', marginBottom: '0.5rem', fontFamily: 'Space Grotesk, sans-serif', fontWeight: 600 }}>{plan.name}</h2>
             <p style={{ color: '#71717a', fontSize: '0.9rem', marginBottom: '1.5rem', lineHeight: 1.5 }}>{plan.description}</p>
 
-            {/* Pricing */}
             <div style={{ 
               background: 'rgba(220, 38, 38, 0.05)', 
               borderRadius: '16px',
@@ -240,7 +225,6 @@ export default function Payment() {
               </div>
             </div>
 
-            {/* Features List */}
             <h4 style={{ fontSize: '0.8rem', color: '#dc2626', textTransform: 'uppercase', letterSpacing: '0.05em', marginBottom: '1rem', fontWeight: 600 }}>
               What's Included
             </h4>
@@ -253,7 +237,6 @@ export default function Payment() {
               ))}
             </ul>
 
-            {/* Bonuses */}
             <div style={{ 
               background: 'rgba(220, 38, 38, 0.05)', 
               border: '2px solid rgba(220, 38, 38, 0.2)',
@@ -286,7 +269,6 @@ export default function Payment() {
               ))}
             </div>
 
-            {/* Delivery & Guarantee */}
             <div style={{ display: 'flex', flexDirection: 'column', gap: '1rem' }}>
               <div style={{ 
                 display: 'flex',
@@ -310,13 +292,11 @@ export default function Payment() {
             </div>
           </div>
 
-          {/* Right: Payment Form */}
           <div style={{ background: '#fff', borderRadius: '24px', padding: '2.5rem', border: '1px solid rgba(0,0,0,0.08)' }}>
             <h2 style={{ fontSize: '1.4rem', marginBottom: '1.5rem', paddingBottom: '1rem', borderBottom: '1px solid rgba(0,0,0,0.08)', fontFamily: 'Space Grotesk, sans-serif', fontWeight: 600 }}>
               Payment Details
             </h2>
 
-            {/* Stripe Badge */}
             <div style={{ display: 'flex', alignItems: 'center', gap: '0.75rem', marginBottom: '2rem', padding: '1rem', background: 'rgba(220, 38, 38, 0.05)', borderRadius: '10px' }}>
               <svg viewBox="0 0 24 24" width="24" height="24" fill="#dc2626">
                 <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-1 17.93c-3.95-.49-7-3.85-7-7.93 0-.62.08-1.21.21-1.79L9 15v1c0 1.1.9 2 2 2v1.93zm6.9-2.54c-.26-.81-1-1.39-1.9-1.39h-1v-3c0-.55-.45-1-1-1H8v-2h2c.55 0 1-.45 1-1V7h2c1.1 0 2-.9 2-2v-.41c2.93 1.19 5 4.06 5 7.41 0 2.08-.8 3.97-2.1 5.39z"/>
@@ -327,7 +307,6 @@ export default function Payment() {
               </div>
             </div>
 
-            {/* Email Input */}
             <div style={{ marginBottom: '1.5rem' }}>
               <label style={{ display: 'block', fontSize: '0.85rem', color: '#71717a', marginBottom: '0.5rem', fontWeight: 500 }}>
                 Email Address *
@@ -349,7 +328,6 @@ export default function Payment() {
               />
             </div>
 
-            {/* Total */}
             <div style={{ 
               display: 'flex', 
               justifyContent: 'space-between', 
@@ -371,7 +349,6 @@ export default function Payment() {
               </span>
             </div>
 
-            {/* Pay Button */}
             <button
               onClick={handleCheckout}
               disabled={loading}
@@ -412,7 +389,6 @@ export default function Payment() {
               )}
             </button>
 
-            {/* Error Message */}
             {error && (
               <div style={{ 
                 marginTop: '1.5rem',
@@ -427,7 +403,6 @@ export default function Payment() {
               </div>
             )}
 
-            {/* Trust Badges */}
             <div style={{ 
               display: 'flex', 
               justifyContent: 'center', 
@@ -456,7 +431,6 @@ export default function Payment() {
           </div>
         </div>
 
-        {/* Alternative Payment Option */}
         <div style={{ 
           textAlign: 'center', 
           marginTop: '3rem', 
