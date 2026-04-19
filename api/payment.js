@@ -14,6 +14,29 @@ const PLAN_NAMES = {
   agency: 'Growth Partner Package'
 }
 
+async function parseRequestBody(req) {
+  // Try various methods to get the body
+  const contentType = req.headers['content-type'] || ''
+  
+  // If body is already an object, use it
+  if (req.body && typeof req.body === 'object' && !Array.isArray(req.body)) {
+    // Check if it has the expected keys
+    const keys = Object.keys(req.body)
+    if (keys.length === 1) {
+      const key = keys[0]
+      // If the key looks like JSON, parse it
+      if (key.startsWith('{') && key.endsWith('}')) {
+        try {
+          return JSON.parse(key)
+        } catch (e) {}
+      }
+    }
+    return req.body
+  }
+  
+  return {}
+}
+
 export default async function handler(req, res) {
   res.setHeader('Access-Control-Allow-Origin', '*')
   res.setHeader('Access-Control-Allow-Methods', 'GET, POST, OPTIONS')
@@ -25,39 +48,25 @@ export default async function handler(req, res) {
 
   const pathname = req.url || ''
   
-  // Parse body - handle multiple formats
-  let plan = ''
-  let email = ''
-  
-  // If req.body is an object with form-like keys
-  if (req.body && typeof req.body === 'object') {
-    // Check for plan in various formats
-    plan = req.body.plan || req.body.planId || req.body.product || ''
-    email = req.body.email || req.body.customerEmail || ''
-    
-    // If plan looks like it was double-encoded, try to fix it
-    if (plan && plan.includes('plan') && plan.includes('full')) {
-      try {
-        const parsed = JSON.parse(plan)
-        plan = parsed.plan || parsed.planId || ''
-        email = parsed.email || parsed.customerEmail || ''
-      } catch (e) {}
-    }
-  }
+  // Parse body
+  const body = await parseRequestBody(req)
+  const plan = body.plan || body.planId || ''
+  const email = body.email || body.customerEmail || ''
   
   // Test endpoint
   if (pathname.match(/^\/api\/payment\/test/)) {
     return res.json({ 
       status: 'ok', 
       plan: plan,
-      bodyKeys: Object.keys(req.body || {})
+      body: body,
+      headers: req.headers
     })
   }
   
   // Checkout endpoint
   if (req.method === 'POST' && pathname.match(/^\/api\/payment\/create-checkout/)) {
     if (!plan || !PLANS[plan]) {
-      return res.status(400).json({ error: 'Invalid plan', got: plan })
+      return res.status(400).json({ error: 'Invalid plan', got: plan, body: body })
     }
     
     const session = await stripe.checkout.sessions.create({
