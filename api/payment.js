@@ -25,27 +25,28 @@ export default async function handler(req, res) {
 
   const pathname = req.url || ''
   
+  // Try to get plan from query params as fallback
   let plan = ''
   let email = ''
   
-  const rawBody = req.body
-  if (rawBody && typeof rawBody === 'object') {
-    const keys = Object.keys(rawBody)
-    if (keys.length === 1) {
-      // The key is something like: "{\"plan\":\"full\"}"
-      // Try to extract plan value using regex
-      const key = keys[0]
-      
-      // Match "plan":"value" where value is between quotes
-      const planMatch = key.match(/"plan"\s*:\s*"([^"]+)"/)
-      if (planMatch) {
-        plan = planMatch[1]
-      }
-      
-      // Match "customerEmail":"value" or "email":"value"
-      const emailMatch = key.match(/"(customerEmail|email)"\s*:\s*"([^"]+)"/)
-      if (emailMatch) {
-        email = emailMatch[2]
+  // Try query string
+  const queryMatch = pathname.match(/[?&]plan=([^&]+)/)
+  if (queryMatch) {
+    plan = queryMatch[1]
+  }
+  
+  // If no query plan, try body
+  if (!plan) {
+    const rawBody = req.body
+    if (rawBody && typeof rawBody === 'object') {
+      const keys = Object.keys(rawBody)
+      if (keys.length === 1) {
+        // Extract from escaped JSON key
+        const key = keys[0]
+        const planMatch = key.match(/"plan"\s*:\s*"([^"]+)"/)
+        if (planMatch) {
+          plan = planMatch[1]
+        }
       }
     }
   }
@@ -55,7 +56,8 @@ export default async function handler(req, res) {
     return res.json({ 
       status: 'ok',
       plan: plan,
-      success: plan === 'full'
+      success: plan === 'full',
+      url: pathname
     })
   }
   
@@ -75,7 +77,6 @@ export default async function handler(req, res) {
         },
         quantity: 1
       }],
-      customer_email: email || undefined,
       success_url: 'https://ascendant-strategy-6vvr.vercel.app/payment/success?session_id={CHECKOUT_SESSION_ID}&plan=' + plan,
       cancel_url: 'https://ascendant-strategy-6vvr.vercel.app/pricing'
     })
