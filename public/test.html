@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html>
+<head><title>Test</title></head>
+<body>
+<h1>Testing Stripe API</h1>
+<button onclick="testAPI()">Test Payment API</button>
+<pre id="result"></pre>
+<script>
+async function testAPI() {
+  try {
+    const res = await fetch('/api/create-checkout', {
+      method: 'POST',
+      headers: {'Content-Type': 'application/json'},
+      body: JSON.stringify({plan: 'strategy', email: 'test@test.com'})
+    });
+    const data = await res.json();
+    document.getElementById('result').textContent = JSON.stringify(data, null, 2);
+    if (data.url) {
+      window.location.href = data.url;
+    }
+  } catch (e) {
+    document.getElementById('result').textContent = 'Error: ' + e.message;
+  }
+}
+</script>
+</body>
+</html>
