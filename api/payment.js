@@ -25,41 +25,68 @@ export default async function handler(req, res) {
 
   const pathname = req.url || ''
   
-  // Parse body
-  let bodyData = {}
-  const rawBody = req.body || req.rawBody
-  
-  if (rawBody) {
-    try {
-      if (Buffer.isBuffer(rawBody)) {
-        bodyData = JSON.parse(rawBody.toString())
-      } else if (typeof rawBody === 'string') {
-        bodyData = JSON.parse(rawBody)
-      } else if (typeof rawBody === 'object') {
-        bodyData = rawBody
+  // Try to get raw body string for parsing
+  let rawString = ''
+  if (req.rawBody) {
+    rawString = typeof req.rawBody === 'string' ? req.rawBody : req.rawBody.toString()
+  } else if (req.body) {
+    // Check if body is already parsed correctly
+    if (typeof req.body === 'object' && req.body.plan) {
+      // Already parsed
+      const plan = req.body.plan
+      const email = req.body.customerEmail || req.body.email
+      
+      if (req.method === 'POST' && pathname.match(/^\/api\/payment\/create-checkout/)) {
+        if (!plan || !PLANS[plan]) {
+          return res.status(400).json({ error: 'Invalid plan', got: plan })
+        }
+        
+        const session = await stripe.checkout.sessions.create({
+          mode: 'payment',
+          line_items: [{
+            price_data: {
+              currency: 'nzd',
+              product_data: { name: PLAN_NAMES[plan] },
+              unit_amount: PLANS[plan]
+            },
+            quantity: 1
+          }],
+          customer_email: email || undefined,
+          success_url: 'https://ascendant-strategy-6vvr.vercel.app/payment/success?session_id={CHECKOUT_SESSION_ID}&plan=' + plan,
+          cancel_url: 'https://ascendant-strategy-6vvr.vercel.app/pricing'
+        })
+        
+        return res.json({ url: session.url })
       }
-    } catch (e) {
-      bodyData = { _parseError: e.message }
     }
+    // Otherwise use body as is
+    rawString = JSON.stringify(req.body)
   }
   
-  const plan = bodyData.plan || bodyData.planId || ''
+  // Parse JSON from raw string
+  let bodyData = {}
+  try {
+    if (rawString && rawString.trim()) {
+      bodyData = JSON.parse(rawString)
+    }
+  } catch (e) {}
+  
+  const plan = bodyData.plan || ''
   const email = bodyData.customerEmail || bodyData.email || ''
   
   // Test endpoint
   if (pathname.match(/^\/api\/payment\/test/)) {
     return res.json({ 
       status: 'ok', 
-      body: bodyData,
-      hasRawBody: !!rawBody,
-      rawType: rawBody ? typeof rawBody : 'undefined'
+      raw: rawString.substring(0, 100),
+      body: bodyData
     })
   }
   
   // Checkout endpoint
   if (req.method === 'POST' && pathname.match(/^\/api\/payment\/create-checkout/)) {
     if (!plan || !PLANS[plan]) {
-      return res.status(400).json({ error: 'Invalid plan', got: plan })
+      return res.status(400).json({ error: 'Invalid plan', got: plan, raw: rawString })
     }
     
     const session = await stripe.checkout.sessions.create({
@@ -94,7 +121,7 @@ export default async function handler(req, res) {
   if (pathname.match(/^\/api\/payment\/webhook/)) {
     try {
       const event = stripe.webhooks.constructEvent(
-        typeof rawBody === 'string' ? rawBody : JSON.stringify(rawBody),
+        rawString || JSON.stringify(req.body),
         req.headers['stripe-signature'],
         process.env.STRIPE_WEBHOOK_SECRET || ''
       )
