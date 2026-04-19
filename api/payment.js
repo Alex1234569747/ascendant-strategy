@@ -32,16 +32,23 @@ export default async function handler(req, res) {
   if (rawBody && typeof rawBody === 'object') {
     const keys = Object.keys(rawBody)
     if (keys.length === 1) {
-      // Fix escaped quotes: "{\"plan\":\"full\"}" → {"plan":"full"} → {plan: "full"}
-      let jsonStr = keys[0]
-        .split('\\"')
-        .join('"')
+      const key = keys[0]
       
+      // Direct parse - the key should be valid JSON
       try {
-        const parsed = JSON.parse(jsonStr)
+        const parsed = JSON.parse(key)
         plan = parsed.plan || ''
         email = parsed.customerEmail || parsed.email || ''
-      } catch (e) {}
+      } catch (e) {
+        // If direct parse fails, try unescape approach
+        try {
+          // Handle: \" → "
+          const unescaped = key.replace(/\x22/g, '"')
+          const parsed = JSON.parse(unescaped)
+          plan = parsed.plan || ''
+          email = parsed.customerEmail || parsed.email || ''
+        } catch (e2) {}
+      }
     }
   }
   
