@@ -29,18 +29,33 @@ export default async function handler(req, res) {
     return res.status(200).end()
   }
 
-  const { url, method, body } = req
+  // Get clean path without query string
+  const fullUrl = req.url || ''
+  const urlPath = fullUrl.split('?')[0]
+  const method = req.method || 'GET'
+
+  // Parse body
+  let parsedBody = {}
+  if (req.body) {
+    if (typeof req.body === 'string') {
+      try { parsedBody = JSON.parse(req.body) } catch (e) {}
+    } else if (typeof req.body === 'object') {
+      parsedBody = req.body
+    }
+  }
 
   try {
-    if (method === 'POST' && url === '/api/payment/create-checkout') {
-      const { plan, customerEmail } = body ? JSON.parse(body) : {}
+    // Create checkout endpoint
+    if (method === 'POST' && urlPath === '/api/payment/create-checkout') {
+      const plan = parsedBody.plan
+      const customerEmail = parsedBody.customerEmail
       const planConfig = PLANS_CONFIG[plan]
       
       if (!planConfig) {
         return res.status(400).json({ error: 'Invalid plan' })
       }
       
-      const session = await stripe.checkout.sessions.create({
+      const sessionConfig = {
         mode: 'payment',
         line_items: [{
           price_data: {
@@ -53,17 +68,23 @@ export default async function handler(req, res) {
           },
           quantity: 1
         }],
-        customer_email: customerEmail || undefined,
-        success_url: `https://ascendant-strategy-6vvr.vercel.app/payment/success?session_id={CHECKOUT_SESSION_ID}&plan=${plan}`,
-        cancel_url: `https://ascendant-strategy-6vvr.vercel.app/pricing`,
-        metadata: { plan }
-      })
+        success_url: 'https://ascendant-strategy-6vvr.vercel.app/payment/success?session_id={CHECKOUT_SESSION_ID}&plan=' + plan,
+        cancel_url: 'https://ascendant-strategy-6vvr.vercel.app/pricing',
+        metadata: { plan: plan }
+      }
+      
+      if (customerEmail) {
+        sessionConfig.customer_email = customerEmail
+      }
+      
+      const session = await stripe.checkout.sessions.create(sessionConfig)
       
       return res.status(200).json({ url: session.url })
     }
 
-    if (method === 'GET' && url.startsWith('/api/payment/verify/')) {
-      const sessionId = url.split('/').pop()
+    // Verify endpoint
+    if (method === 'GET' && urlPath.startsWith('/api/payment/verify/')) {
+      const sessionId = urlPath.split('/').pop()
       const session = await stripe.checkout.sessions.retrieve(sessionId)
       
       return res.status(200).json({
@@ -76,11 +97,17 @@ export default async function handler(req, res) {
       })
     }
 
-    if (method === 'POST' && url === '/api/payment/webhook') {
+    // Webhook endpoint
+    if (method === 'POST' && urlPath === '/api/payment/webhook') {
       const sig = req.headers['stripe-signature']
+      let rawBody = req.body
+      
+      if (typeof rawBody === 'object' && rawBody !== null) {
+        rawBody = JSON.stringify(rawBody)
+      }
       
       try {
-        const event = stripe.webhooks.constructEvent(req.body, sig, process.env.STRIPE_WEBHOOK_SECRET || '')
+        const event = stripe.webhooks.constructEvent(rawBody, sig, process.env.STRIPE_WEBHOOK_SECRET || '')
         
         if (event.type === 'checkout.session.completed') {
           console.log('Payment successful:', event.data.object.id)
@@ -92,7 +119,8 @@ export default async function handler(req, res) {
       }
     }
 
-    if (method === 'GET' && url === '/api/payment/test') {
+    // Test endpoint
+    if (method === 'GET' && urlPath === '/api/payment/test') {
       return res.status(200).json({ message: 'Payment API working!' })
     }
 
