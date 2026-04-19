@@ -14,34 +14,6 @@ const PLAN_NAMES = {
   agency: 'Growth Partner Package'
 }
 
-function parseBody(body) {
-  if (!body) return {}
-  
-  // If body is a string, try to parse it
-  if (typeof body === 'string') {
-    try {
-      const parsed = JSON.parse(body)
-      return parsed
-    } catch (e) {
-      return {}
-    }
-  }
-  
-  // If body is an object (Vercel quirk), extract the key which is JSON
-  if (typeof body === 'object' && !Array.isArray(body)) {
-    const keys = Object.keys(body)
-    if (keys.length === 1) {
-      const key = keys[0]
-      try {
-        return JSON.parse(key)
-      } catch (e) {}
-    }
-    return body
-  }
-  
-  return {}
-}
-
 export default async function handler(req, res) {
   res.setHeader('Access-Control-Allow-Origin', '*')
   res.setHeader('Access-Control-Allow-Methods', 'GET, POST, OPTIONS')
@@ -52,19 +24,43 @@ export default async function handler(req, res) {
   }
 
   const pathname = req.url || ''
-  const body = parseBody(req.body)
   
-  // Get plan and email
-  const plan = typeof body === 'object' ? (body.plan || body.planId || '') : ''
-  const email = typeof body === 'object' ? (body.customerEmail || body.email || '') : ''
+  // Explicit body parsing for Vercel quirk
+  let plan = ''
+  let email = ''
+  
+  // Try to parse body - handle multiple formats
+  if (req.body) {
+    // If it's a string, try to parse as JSON
+    if (typeof req.body === 'string') {
+      try {
+        const parsed = JSON.parse(req.body)
+        plan = parsed.plan || parsed.planId || ''
+        email = parsed.customerEmail || parsed.email || ''
+      } catch (e) {
+        // Failed to parse, leave empty
+      }
+    }
+    // If it's an object with weird keys (Vercel quirk)
+    else if (typeof req.body === 'object') {
+      const keys = Object.keys(req.body)
+      if (keys.length === 1) {
+        // Key is the actual JSON payload
+        try {
+          const parsed = JSON.parse(keys[0])
+          plan = parsed.plan || parsed.planId || ''
+          email = parsed.customerEmail || parsed.email || ''
+        } catch (e) {}
+      }
+    }
+  }
   
   // Test endpoint
   if (pathname.match(/^\/api\/payment\/test/)) {
     return res.json({ 
       status: 'ok', 
       plan: plan,
-      body: body,
-      keys: typeof body === 'object' ? Object.keys(body) : 'not object'
+      email: email
     })
   }
   
