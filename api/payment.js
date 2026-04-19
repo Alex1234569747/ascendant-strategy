@@ -25,42 +25,45 @@ export default async function handler(req, res) {
 
   const pathname = req.url || ''
   
-  // Explicit body parsing for Vercel quirk
+  // ALWAYS show raw req.body for debugging
+  const rawBody = req.body
+  
+  // Parse plan from req.body directly  
   let plan = ''
   let email = ''
   
-  // Try to parse body - handle multiple formats
-  if (req.body) {
-    // If it's a string, try to parse as JSON
-    if (typeof req.body === 'string') {
+  if (rawBody) {
+    // String case
+    if (typeof rawBody === 'string') {
       try {
-        const parsed = JSON.parse(req.body)
-        plan = parsed.plan || parsed.planId || ''
+        const parsed = JSON.parse(rawBody)
+        plan = parsed.plan || ''
         email = parsed.customerEmail || parsed.email || ''
-      } catch (e) {
-        // Failed to parse, leave empty
-      }
+      } catch (e) {}
     }
-    // If it's an object with weird keys (Vercel quirk)
-    else if (typeof req.body === 'object') {
-      const keys = Object.keys(req.body)
-      if (keys.length === 1) {
-        // Key is the actual JSON payload
+    // Object case - Vercel quirk
+    else if (typeof rawBody === 'object') {
+      // Get the only key and try to parse it
+      const keys = Object.keys(rawBody)
+      if (keys.length > 0) {
         try {
           const parsed = JSON.parse(keys[0])
-          plan = parsed.plan || parsed.planId || ''
+          plan = parsed.plan || ''
           email = parsed.customerEmail || parsed.email || ''
         } catch (e) {}
       }
     }
   }
   
-  // Test endpoint
+  // Debug endpoint
   if (pathname.match(/^\/api\/payment\/test/)) {
     return res.json({ 
-      status: 'ok', 
+      status: 'ok',
       plan: plan,
-      email: email
+      email: email,
+      rawType: typeof rawBody,
+      rawKeys: typeof rawBody === 'object' ? Object.keys(rawBody || {}) : 'not object',
+      rawFirst: typeof rawBody === 'object' && rawBody ? Object.keys(rawBody)[0] : 'no body'
     })
   }
   
@@ -101,9 +104,9 @@ export default async function handler(req, res) {
   // Webhook
   if (pathname.match(/^\/api\/payment\/webhook/)) {
     try {
-      const rawBody = typeof req.body === 'string' ? req.body : JSON.stringify(req.body)
+      const rawBodyStr = typeof rawBody === 'string' ? rawBody : JSON.stringify(rawBody)
       const event = stripe.webhooks.constructEvent(
-        rawBody,
+        rawBodyStr,
         req.headers['stripe-signature'],
         process.env.STRIPE_WEBHOOK_SECRET || ''
       )
