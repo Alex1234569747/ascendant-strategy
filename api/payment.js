@@ -24,6 +24,7 @@ export default async function handler(req, res) {
   }
 
   const pathname = req.url || ''
+  console.log('API called:', pathname, 'method:', req.method)
   
   // Try to get plan from query params
   let plan = ''
@@ -34,16 +35,16 @@ export default async function handler(req, res) {
   }
   
   // Test endpoint
-  if (pathname.match(/^\/api\/payment\/test/)) {
+  if (pathname.includes('test')) {
     return res.json({ 
       status: 'ok',
       plan: plan,
-      success: plan === 'full'
+      receivedPath: pathname
     })
   }
   
-  // Checkout endpoint - accept GET or POST
-  if (pathname.match(/^\/api\/payment\/create-checkout/)) {
+  // Checkout endpoint
+  if (pathname.includes('create-checkout')) {
     if (!plan || !PLANS[plan]) {
       return res.status(400).json({ error: 'Invalid plan', got: plan })
     }
@@ -66,8 +67,11 @@ export default async function handler(req, res) {
   }
   
   // Verify endpoint
-  const verifyMatch = pathname.match(/^\/api\/payment\/verify\/([^/?]+)/)
-  if (verifyMatch) {
+  if (pathname.includes('verify')) {
+    const verifyMatch = pathname.match(/verify\/([^/?]+)/)
+    if (!verifyMatch) {
+      return res.status(400).json({ error: 'Missing session ID' })
+    }
     try {
       const session = await stripe.checkout.sessions.retrieve(verifyMatch[1])
       return res.json({
@@ -80,7 +84,7 @@ export default async function handler(req, res) {
   }
   
   // Webhook
-  if (pathname.match(/^\/api\/payment\/webhook/)) {
+  if (pathname.includes('webhook')) {
     try {
       const rawBody = req.body
       const rawBodyStr = typeof rawBody === 'string' ? rawBody : JSON.stringify(rawBody)
@@ -95,5 +99,5 @@ export default async function handler(req, res) {
     }
   }
   
-  return res.status(404).json({ error: 'Not found' })
+  return res.status(404).json({ error: 'Not found', receivedPath: pathname })
 }
