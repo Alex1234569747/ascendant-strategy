@@ -15,21 +15,26 @@ const PLAN_NAMES = {
 }
 
 function parseBody(body) {
-  // Handle Vercel quirk where JSON body becomes {"{\"plan\":\"full\"}": ""}
   if (!body) return {}
   
+  // If body is a string, try to parse it
   if (typeof body === 'string') {
-    try { return JSON.parse(body) } catch (e) { return {} }
+    try {
+      const parsed = JSON.parse(body)
+      return parsed
+    } catch (e) {
+      return {}
+    }
   }
   
+  // If body is an object (Vercel quirk), extract the key which is JSON
   if (typeof body === 'object' && !Array.isArray(body)) {
     const keys = Object.keys(body)
     if (keys.length === 1) {
       const key = keys[0]
-      // Key looks like JSON, parse it
-      if (key.includes('{')) {
-        try { return JSON.parse(key) } catch (e) {}
-      }
+      try {
+        return JSON.parse(key)
+      } catch (e) {}
     }
     return body
   }
@@ -48,17 +53,18 @@ export default async function handler(req, res) {
 
   const pathname = req.url || ''
   const body = parseBody(req.body)
-  const plan = body.plan || body.planId || ''
-  const email = body.customerEmail || body.email || ''
+  
+  // Get plan and email
+  const plan = typeof body === 'object' ? (body.plan || body.planId || '') : ''
+  const email = typeof body === 'object' ? (body.customerEmail || body.email || '') : ''
   
   // Test endpoint
   if (pathname.match(/^\/api\/payment\/test/)) {
     return res.json({ 
       status: 'ok', 
       plan: plan,
-      bodyType: typeof body,
       body: body,
-      reqBody: req.body
+      keys: typeof body === 'object' ? Object.keys(body) : 'not object'
     })
   }
   
