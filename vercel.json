@@ -1,12 +1,8 @@
 {
-  "version": 2,
-  "routes": [
-    { "src": "/api/create-checkout", "dest": "/api/payment.js" },
-    { "src": "/api/test", "dest": "/api/payment.js" },
-    { "src": "/api/verify/(.*)", "dest": "/api/payment.js" },
-    { "src": "/api/webhook", "dest": "/api/payment.js" }
-  ],
-  "builds": [
-    { "src": "api/payment.js", "use": "@vercel/node" }
+  "rewrites": [
+    { "source": "/api/create-checkout", "destination": "/api/payment.js" },
+    { "source": "/api/test", "destination": "/api/payment.js" },
+    { "source": "/api/verify/(.*)", "destination": "/api/payment.js" },
+    { "source": "/api/webhook", "destination": "/api/payment.js" }
   ]
 }
