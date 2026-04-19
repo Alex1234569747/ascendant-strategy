@@ -25,34 +25,49 @@ export default async function handler(req, res) {
 
   const pathname = req.url || ''
   
-  // Vercel parses body automatically, but also handles raw/string
-  let body = req.body
-  if (typeof body === 'string') {
-    try { body = JSON.parse(body) } catch (e) { body = {} }
-  }
-  if (!body || typeof body !== 'object') {
-    body = {}
+  // Parse body - handle Buffer, string, object
+  let bodyData = {}
+  const rawBody = req.body
+  
+  if (rawBody) {
+    if (Buffer.isBuffer(rawBody)) {
+      try {
+        bodyData = JSON.parse(rawBody.toString())
+      } catch (e) {}
+    } else if (typeof rawBody === 'string') {
+      try {
+        bodyData = JSON.parse(rawBody)
+      } catch (e) {}
+    } else if (typeof rawBody === 'object') {
+      bodyData = rawBody
+    }
   }
   
-  // Extract plan from body (handles various field names)
-  const plan = body.plan || body.planId || body.product
-  const email = body.customerEmail || body.email || body.customer_email
+  // Also check for body in different locations (Vercel quirk)
+  const plan = bodyData.plan || bodyData.planId || bodyData.product || ''
+  const email = bodyData.customerEmail || bodyData.email || bodyData.customer_email || ''
   
   // Test endpoint
   if (pathname.match(/^\/api\/payment\/test/)) {
-    return res.json({ status: 'ok', body: body, plan: plan })
+    return res.json({ 
+      status: 'ok', 
+      body: bodyData,
+      rawType: typeof rawBody,
+      rawLength: rawBody ? rawBody.length : 0,
+      raw: rawBody ? rawBody.toString().substring(0, 200) : 'none'
+    })
   }
   
   // Checkout endpoint
   if (req.method === 'POST' && pathname.match(/^\/api\/payment\/create-checkout/)) {
     if (!plan || !PLANS[plan]) {
-      return res.status(400).json({ error: 'Invalid plan', got: plan })
+      return res.status(400).json({ error: 'Invalid plan', got: plan, body: bodyData })
     }
     
     const priceInCents = PLANS[plan]
     const name = PLAN_NAMES[plan]
     
-    const session = await stripe.checkout.sessions.create({
+    const sessionParams = {
       mode: 'payment',
       line_items: [{
         price_data: {
@@ -62,10 +77,15 @@ export default async function handler(req, res) {
         },
         quantity: 1
       }],
-      customer_email: email || undefined,
       success_url: 'https://ascendant-strategy-6vvr.vercel.app/payment/success?session_id={CHECKOUT_SESSION_ID}&plan=' + plan,
       cancel_url: 'https://ascendant-strategy-6vvr.vercel.app/pricing'
-    })
+    }
+    
+    if (email) {
+      sessionParams.customer_email = email
+    }
+    
+    const session = await stripe.checkout.sessions.create(sessionParams)
     
     return res.json({ url: session.url })
   }
@@ -87,12 +107,12 @@ export default async function handler(req, res) {
   // Webhook
   if (pathname.match(/^\/api\/payment\/webhook/)) {
     const sig = req.headers['stripe-signature']
-    let rawBody = req.body
-    if (typeof rawBody === 'object' && rawBody !== null) {
-      rawBody = JSON.stringify(rawBody)
+    let rawBodyStr = rawBody
+    if (!Buffer.isBuffer(rawBody) && typeof rawBody !== 'string') {
+      rawBodyStr = JSON.stringify(rawBody)
     }
     try {
-      const event = stripe.webhooks.constructEvent(rawBody, sig, process.env.STRIPE_WEBHOOK_SECRET || '')
+      const event = stripe.webhooks.constructEvent(rawBodyStr, sig, process.env.STRIPE_WEBHOOK_SECRET || '')
       return res.json({ received: true })
     } catch (e) {
       return res.status(400).json({ error: 'Webhook failed' })
