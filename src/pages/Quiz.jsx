@@ -545,7 +545,7 @@ export default function Quiz() {
               <div>
                 <label style={{ display: 'block', fontSize: '0.85rem', color: '#71717a', marginBottom: '0.5rem', fontWeight: 500 }}>Email Address *</label>
                 <input 
-                  type="email' 
+                  type="email" 
                   placeholder="john@company.com"
                   value={answers.email}
                   onChange={(e) => setAnswers(prev => ({ ...prev, email: e.target.value }))}
