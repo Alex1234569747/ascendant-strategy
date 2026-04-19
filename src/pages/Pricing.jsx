@@ -27,7 +27,6 @@ const SERVICES = [
     guarantee: '100% Money-Back Guarantee — Not happy with your strategy? Full refund within 7 days.',
     spotsLeft: 7,
     recommended: false,
-    isNew: false,
   },
   {
     id: 'full',
@@ -58,7 +57,6 @@ const SERVICES = [
     guarantee: '100% Satisfaction Guarantee — We\'ll revise until you\'re 100% happy or get your money back.',
     spotsLeft: 4,
     recommended: true,
-    isNew: false,
   },
   {
     id: 'agency',
@@ -93,143 +91,54 @@ const SERVICES = [
     guarantee: 'Double Your Money Back — Don\'t see results in 60 days? We refund double your investment.',
     spotsLeft: 2,
     recommended: false,
-    isNew: false,
   },
 ]
 
 export default function Pricing() {
   return (
-    <div style={{ minHeight: '100vh', background: '#0a0f14', color: '#e8eaed' }}>
-      {/* Urgency Banner */}
-      <div style={{ 
-        background: 'linear-gradient(90deg, #ff6b35, #f7c948)',
-        color: '#0a0f14',
-        textAlign: 'center',
-        padding: '1rem',
-        fontWeight: 700,
-        fontSize: '1rem'
-      }}>
-        ⚡ LIMITED TIME: Get up to $1,400+ in bonuses FREE with your order — Ends in 48 hours!
-      </div>
-
-      <nav style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', padding: '1.5rem 2rem', borderBottom: '1px solid rgba(45, 212, 191, 0.12)' }}>
-        <Link to="/" style={{ display: 'flex', alignItems: 'center', gap: '0.5rem', textDecoration: 'none', color: '#e8eaed', fontSize: '1.1rem' }}>
-          <span style={{ color: '#2dd4bf' }}>◆</span> Ascendant Strategy
+    <div style={{ minHeight: '100vh', background: '#fafafa', color: '#18181b' }}>
+      {/* Header */}
+      <nav style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', padding: '1.25rem 2rem', background: '#fff', borderBottom: '1px solid rgba(0,0,0,0.05)' }}>
+        <Link to="/" style={{ display: 'flex', alignItems: 'center', gap: '0.5rem', textDecoration: 'none', color: '#18181b', fontFamily: 'Space Grotesk, sans-serif', fontSize: '1.2rem', fontWeight: 700 }}>
+          <span style={{ color: '#dc2626' }}>▲</span> Ascendant Strategy
         </Link>
         <div style={{ display: 'flex', gap: '2rem' }}>
-          <Link to="/" style={{ color: '#8b949e', textDecoration: 'none' }}>Home</Link>
-          <Link to="/quiz" style={{ color: '#8b949e', textDecoration: 'none' }}>Free Quiz</Link>
-          <Link to="/contact" style={{ color: '#8b949e', textDecoration: 'none' }}>Contact</Link>
+          <Link to="/" style={{ color: '#71717a', textDecoration: 'none', fontSize: '0.85rem', fontWeight: 500 }}>Home</Link>
+          <Link to="/quiz" style={{ color: '#71717a', textDecoration: 'none', fontSize: '0.85rem', fontWeight: 500 }}>Free Quiz</Link>
+          <Link to="/contact" style={{ color: '#71717a', textDecoration: 'none', fontSize: '0.85rem', fontWeight: 500 }}>Contact</Link>
         </div>
       </nav>
 
       <div style={{ maxWidth: '1300px', margin: '0 auto', padding: '4rem 1.5rem' }}>
-        <div style={{ textAlign: 'center', marginBottom: '2rem' }}>
-          <div style={{ color: '#ff6b35', fontSize: '0.85rem', textTransform: 'uppercase', letterSpacing: '0.1em', marginBottom: '1rem', fontWeight: 600 }}>
-            🔥 Last Chance — Only {SERVICES.reduce((acc, s) => acc + s.spotsLeft, 0)} spots remaining this month
+        <div style={{ textAlign: 'center', marginBottom: '3rem' }}>
+          <div style={{ color: '#dc2626', fontSize: '0.8rem', textTransform: 'uppercase', letterSpacing: '0.15em', marginBottom: '1rem', fontWeight: 600 }}>
+            🔥 Only {SERVICES.reduce((acc, s) => acc + s.spotsLeft, 0)} spots remaining this month
           </div>
-          <h1 style={{ fontSize: '3.5rem', fontFamily: 'Playfair Display, serif', marginBottom: '1rem' }}>
-            Your Complete <span style={{ background: 'linear-gradient(135deg, #2dd4bf, #5eead4)', WebkitBackgroundClip: 'text', WebkitTextFillColor: 'transparent' }}>Sales Machine</span>
+          <h1 style={{ fontSize: 'clamp(2.5rem, 5vw, 3.5rem)', fontFamily: 'Space Grotesk, sans-serif', marginBottom: '1rem', fontWeight: 700 }}>
+            Your Complete <span style={{ color: '#dc2626' }}>Sales Machine</span>
           </h1>
-          <p style={{ color: '#8b949e', fontSize: '1.1rem', marginBottom: '1rem' }}>
+          <p style={{ color: '#71717a', fontSize: '1.1rem', marginBottom: '1.5rem', maxWidth: '600px', margin: '0 auto 1.5rem' }}>
             From cold traffic to paying customer — we build the entire automated funnel system.
           </p>
-          <div style={{ display: 'inline-flex', alignItems: 'center', gap: '0.5rem', background: 'rgba(45, 212, 191, 0.1)', padding: '0.75rem 1.5rem', borderRadius: '50px' }}>
-            <span style={{ color: '#2dd4bf' }}>💰</span>
-            <span style={{ color: '#e8eaed' }}>Save up to <strong style={{ color: '#2dd4bf' }}>70%</strong> vs agency retainers — Today only</span>
+          <div style={{ display: 'inline-flex', alignItems: 'center', gap: '0.5rem', background: 'rgba(220, 38, 38, 0.08)', padding: '0.75rem 1.5rem', borderRadius: '50px' }}>
+            <span>💰</span>
+            <span>Save up to <strong style={{ color: '#dc2626' }}>70%</strong> vs agency retainers</span>
           </div>
         </div>
 
-        {/* How It Works */}
-        <div style={{ 
-          background: '#111920', 
-          borderRadius: '20px', 
-          padding: '2.5rem',
-          marginBottom: '3rem',
-          border: '1px solid rgba(45, 212, 191, 0.12)'
-        }}>
-          <h2 style={{ textAlign: 'center', fontSize: '1.75rem', marginBottom: '2rem' }}>
-            How Your Sales Funnel Works
-          </h2>
-          <div style={{ display: 'grid', gridTemplateColumns: 'repeat(4, 1fr)', gap: '1.5rem' }}>
-            <div style={{ textAlign: 'center', padding: '1.5rem' }}>
-              <div style={{ 
-                width: '60px', 
-                height: '60px', 
-                background: 'rgba(45, 212, 191, 0.15)', 
-                borderRadius: '50%', 
-                display: 'flex', 
-                alignItems: 'center', 
-                justifyContent: 'center',
-                margin: '0 auto 1rem',
-                fontSize: '1.75rem'
-              }}>🎯</div>
-              <div style={{ color: '#2dd4bf', fontWeight: 700, fontSize: '0.9rem', marginBottom: '0.5rem' }}>STEP 1</div>
-              <div style={{ fontWeight: 600, marginBottom: '0.5rem' }}>Drive Traffic</div>
-              <div style={{ color: '#8b949e', fontSize: '0.85rem' }}>Facebook Ads, Google Ads, or organic content brings cold visitors</div>
-            </div>
-            <div style={{ textAlign: 'center', padding: '1.5rem' }}>
-              <div style={{ 
-                width: '60px', 
-                height: '60px', 
-                background: 'rgba(45, 212, 191, 0.15)', 
-                borderRadius: '50%', 
-                display: 'flex', 
-                alignItems: 'center', 
-                justifyContent: 'center',
-                margin: '0 auto 1rem',
-                fontSize: '1.75rem'
-              }}>📧</div>
-              <div style={{ color: '#2dd4bf', fontWeight: 700, fontSize: '0.9rem', marginBottom: '0.5rem' }}>STEP 2</div>
-              <div style={{ fontWeight: 600, marginBottom: '0.5rem' }}>Capture Leads</div>
-              <div style={{ color: '#8b949e', fontSize: '0.85rem' }}>Landing page + lead magnet captures emails in exchange for free value</div>
-            </div>
-            <div style={{ textAlign: 'center', padding: '1.5rem' }}>
-              <div style={{ 
-                width: '60px', 
-                height: '60px', 
-                background: 'rgba(45, 212, 191, 0.15)', 
-                borderRadius: '50%', 
-                display: 'flex', 
-                alignItems: 'center', 
-                justifyContent: 'center',
-                margin: '0 auto 1rem',
-                fontSize: '1.75rem'
-              }}>🤖</div>
-              <div style={{ color: '#2dd4bf', fontWeight: 700, fontSize: '0.9rem', marginBottom: '0.5rem' }}>STEP 3</div>
-              <div style={{ fontWeight: 600, marginBottom: '0.5rem' }}>Nurture & Sell</div>
-              <div style={{ color: '#8b949e', fontSize: '0.85rem' }}>Email sequence builds trust and guides them to your offer</div>
-            </div>
-            <div style={{ textAlign: 'center', padding: '1.5rem' }}>
-              <div style={{ 
-                width: '60px', 
-                height: '60px', 
-                background: 'rgba(45, 212, 191, 0.15)', 
-                borderRadius: '50%', 
-                display: 'flex', 
-                alignItems: 'center', 
-                justifyContent: 'center',
-                margin: '0 auto 1rem',
-                fontSize: '1.75rem'
-              }}>💰</div>
-              <div style={{ color: '#2dd4bf', fontWeight: 700, fontSize: '0.9rem', marginBottom: '0.5rem' }}>STEP 4</div>
-              <div style={{ fontWeight: 600, marginBottom: '0.5rem' }}>Convert & Scale</div>
-              <div style={{ color: '#8b949e', fontSize: '0.85rem' }}>Sales page + checkout turns leads into customers automatically</div>
-            </div>
-          </div>
-        </div>
-
+        {/* Pricing Cards */}
         <div style={{ display: 'grid', gridTemplateColumns: 'repeat(3, 1fr)', gap: '2rem', marginBottom: '4rem' }}>
           {SERVICES.map((service) => (
             <div key={service.id} style={{ 
-              background: '#111920', 
-              border: service.recommended ? '2px solid #2dd4bf' : '1px solid rgba(45, 212, 191, 0.12)', 
+              background: '#fff', 
+              border: service.recommended ? '2px solid #dc2626' : '1px solid rgba(0,0,0,0.08)', 
               borderRadius: '24px', 
               padding: '2.5rem',
               display: 'flex',
               flexDirection: 'column',
               position: 'relative',
-              boxShadow: service.recommended ? '0 0 60px rgba(45, 212, 191, 0.2)' : 'none'
+              boxShadow: service.recommended ? '0 20px 60px rgba(220, 38, 38, 0.15)' : '0 4px 20px rgba(0,0,0,0.05)',
+              transition: 'transform 0.3s, box-shadow 0.3s'
             }}>
               {/* Badge */}
               {service.recommended && (
@@ -238,14 +147,16 @@ export default function Pricing() {
                   top: '-14px', 
                   left: '50%', 
                   transform: 'translateX(-50%)',
-                  background: 'linear-gradient(135deg, #2dd4bf, #5eead4)',
-                  color: '#0a0f14',
+                  background: '#dc2626',
+                  color: '#fff',
                   padding: '0.5rem 1.5rem',
-                  fontSize: '0.8rem',
+                  fontSize: '0.75rem',
                   fontWeight: 700,
-                  borderRadius: '50px'
+                  borderRadius: '50px',
+                  textTransform: 'uppercase',
+                  letterSpacing: '0.05em'
                 }}>
-                  ⭐ BEST VALUE
+                  ⭐ Best Value
                 </div>
               )}
               
@@ -254,42 +165,42 @@ export default function Pricing() {
                 position: 'absolute', 
                 top: '1rem', 
                 right: '1rem',
-                background: service.spotsLeft <= 2 ? '#ff5252' : 'rgba(45, 212, 191, 0.15)',
-                color: service.spotsLeft <= 2 ? '#fff' : '#2dd4bf',
+                background: service.spotsLeft <= 2 ? '#dc2626' : 'rgba(220, 38, 38, 0.1)',
+                color: service.spotsLeft <= 2 ? '#fff' : '#dc2626',
                 padding: '0.35rem 0.75rem',
-                fontSize: '0.75rem',
+                fontSize: '0.7rem',
                 fontWeight: 600,
                 borderRadius: '6px'
               }}>
-                {service.spotsLeft <= 2 ? '🚨 ' : '• '}{service.spotsLeft} spots left
+                {service.spotsLeft <= 2 ? '🚨 ' : ''}{service.spotsLeft} spots left
               </div>
 
               <div style={{ marginBottom: '1.5rem' }}>
-                <span style={{ fontSize: '0.75rem', color: '#2dd4bf', textTransform: 'uppercase', letterSpacing: '0.1em' }}>
+                <span style={{ fontSize: '0.7rem', color: '#dc2626', textTransform: 'uppercase', letterSpacing: '0.1em', fontWeight: 600 }}>
                   {service.tagline}
                 </span>
-                <h3 style={{ fontSize: '1.5rem', marginBottom: '0.5rem' }}>{service.name}</h3>
-                <p style={{ color: '#8b949e', fontSize: '0.9rem', lineHeight: 1.5 }}>{service.desc}</p>
+                <h3 style={{ fontSize: '1.4rem', marginBottom: '0.5rem', fontFamily: 'Space Grotesk, sans-serif', fontWeight: 600 }}>{service.name}</h3>
+                <p style={{ color: '#71717a', fontSize: '0.9rem', lineHeight: 1.5 }}>{service.desc}</p>
               </div>
               
               {/* Pricing */}
-              <div style={{ marginBottom: '1.5rem', paddingBottom: '1.5rem', borderBottom: '1px solid rgba(45, 212, 191, 0.12)' }}>
+              <div style={{ marginBottom: '1.5rem', paddingBottom: '1.5rem', borderBottom: '1px solid rgba(0,0,0,0.08)' }}>
                 <div style={{ display: 'flex', alignItems: 'baseline', gap: '0.5rem' }}>
-                  <span style={{ color: '#2dd4bf', fontSize: '1.25rem' }}>NZ$</span>
-                  <span style={{ fontSize: '3.5rem', fontWeight: 700 }}>{service.price}</span>
+                  <span style={{ color: '#dc2626', fontSize: '1.25rem', fontWeight: 600 }}>NZ$</span>
+                  <span style={{ fontSize: '3.5rem', fontWeight: 700, fontFamily: 'Space Grotesk, sans-serif' }}>{service.price}</span>
                 </div>
                 <div style={{ display: 'flex', alignItems: 'center', gap: '0.75rem', marginTop: '0.5rem' }}>
                   <span style={{ 
-                    background: '#ff5252', 
+                    background: '#dc2626', 
                     color: '#fff', 
                     padding: '0.2rem 0.6rem', 
                     borderRadius: '4px', 
-                    fontSize: '0.8rem', 
+                    fontSize: '0.75rem', 
                     fontWeight: 600 
                   }}>
                     SAVE ${(service.originalPrice - service.price).toLocaleString()}
                   </span>
-                  <span style={{ color: '#8b949e', fontSize: '0.85rem', textDecoration: 'line-through' }}>
+                  <span style={{ color: '#a1a1aa', fontSize: '0.85rem', textDecoration: 'line-through' }}>
                     NZ${service.originalPrice}
                   </span>
                 </div>
@@ -298,8 +209,8 @@ export default function Pricing() {
               {/* Features */}
               <ul style={{ listStyle: 'none', flex: 1, marginBottom: '1.5rem' }}>
                 {service.features.map((f, i) => (
-                  <li key={i} style={{ display: 'flex', alignItems: 'flex-start', gap: '0.75rem', padding: '0.6rem 0', color: '#e8eaed', fontSize: '0.95rem' }}>
-                    <span style={{ color: '#2dd4bf', fontWeight: 700, flexShrink: 0 }}>✓</span>
+                  <li key={i} style={{ display: 'flex', alignItems: 'flex-start', gap: '0.75rem', padding: '0.6rem 0', fontSize: '0.9rem' }}>
+                    <span style={{ color: '#dc2626', fontWeight: 700, flexShrink: 0 }}>✓</span>
                     {f}
                   </li>
                 ))}
@@ -307,26 +218,26 @@ export default function Pricing() {
 
               {/* Bonuses */}
               <div style={{ 
-                background: 'rgba(255, 107, 53, 0.1)', 
-                border: '1px solid rgba(255, 107, 53, 0.3)',
+                background: 'rgba(220, 38, 38, 0.05)', 
+                border: '1px solid rgba(220, 38, 38, 0.15)',
                 borderRadius: '12px',
                 padding: '1rem',
                 marginBottom: '1.5rem'
               }}>
                 <div style={{ 
-                  color: '#ff6b35', 
-                  fontSize: '0.85rem', 
+                  color: '#dc2626', 
+                  fontSize: '0.8rem', 
                   fontWeight: 700, 
                   marginBottom: '0.75rem',
                   textTransform: 'uppercase'
                 }}>
-                  🎁 Exclusive Bonuses — Yours FREE
+                  🎁 Exclusive Bonuses
                 </div>
                 {service.bonuses.map((bonus, i) => (
                   <div key={i} style={{ 
-                    color: '#e8eaed', 
                     fontSize: '0.85rem', 
-                    padding: '0.35rem 0' 
+                    padding: '0.35rem 0',
+                    color: '#52525b'
                   }}>
                     {bonus}
                   </div>
@@ -335,13 +246,13 @@ export default function Pricing() {
 
               {/* Guarantee */}
               <div style={{ 
-                background: 'rgba(45, 212, 191, 0.08)', 
+                background: 'rgba(220, 38, 38, 0.05)', 
                 borderRadius: '8px',
                 padding: '0.75rem',
                 marginBottom: '1.5rem',
                 textAlign: 'center'
               }}>
-                <span style={{ color: '#2dd4bf', fontSize: '0.9rem' }}>🛡️ {service.guarantee}</span>
+                <span style={{ color: '#dc2626', fontSize: '0.85rem' }}>🛡️ {service.guarantee}</span>
               </div>
 
               {/* CTA Button */}
@@ -350,17 +261,17 @@ export default function Pricing() {
                 style={{ 
                   display: 'block',
                   padding: '1.25rem',
-                  background: 'linear-gradient(135deg, #2dd4bf, #5eead4)',
-                  border: service.recommended ? 'none' : '2px solid #2dd4bf',
-                  color: '#0a0f14',
+                  background: service.recommended ? '#dc2626' : 'transparent',
+                  border: '2px solid #dc2626',
+                  color: service.recommended ? '#fff' : '#dc2626',
                   fontWeight: 700,
-                  fontSize: '1.1rem',
+                  fontSize: '1rem',
                   textAlign: 'center',
                   borderRadius: '12px',
                   textDecoration: 'none',
                   textTransform: 'uppercase',
                   letterSpacing: '0.05em',
-                  boxShadow: '0 8px 30px rgba(45, 212, 191, 0.3)'
+                  transition: 'all 0.3s'
                 }}
               >
                 Get Started Now →
@@ -373,124 +284,45 @@ export default function Pricing() {
                 gap: '1.5rem', 
                 marginTop: '1rem',
                 paddingTop: '1rem',
-                borderTop: '1px solid rgba(45, 212, 191, 0.08)'
+                borderTop: '1px solid rgba(0,0,0,0.05)'
               }}>
-                <span style={{ color: '#8b949e', fontSize: '0.75rem' }}>🔒 Secure</span>
-                <span style={{ color: '#8b949e', fontSize: '0.75rem' }}>✓ Verified</span>
-                <span style={{ color: '#8b949e', fontSize: '0.75rem' }}>⭐ 5-Star</span>
+                <span style={{ color: '#71717a', fontSize: '0.75rem' }}>🔒 Secure</span>
+                <span style={{ color: '#71717a', fontSize: '0.75rem' }}>✓ Verified</span>
+                <span style={{ color: '#71717a', fontSize: '0.75rem' }}>⭐ 5-Star</span>
               </div>
             </div>
           ))}
         </div>
 
-        {/* What's Included Breakdown */}
-        <div style={{ 
-          background: '#111920', 
-          borderRadius: '20px', 
-          padding: '3rem',
-          marginBottom: '3rem',
-          border: '1px solid rgba(45, 212, 191, 0.12)'
-        }}>
-          <h2 style={{ textAlign: 'center', fontSize: '2rem', marginBottom: '2rem' }}>
-            What You Actually <span style={{ color: '#2dd4bf' }}>Get</span>
-          </h2>
-          <div style={{ display: 'grid', gridTemplateColumns: 'repeat(2, 1fr)', gap: '2rem' }}>
-            {/* Funnel Elements */}
-            <div style={{ padding: '1.5rem', background: 'rgba(45, 212, 191, 0.05)', borderRadius: '16px' }}>
-              <h3 style={{ color: '#2dd4bf', marginBottom: '1rem', fontSize: '1.1rem' }}>🎯 Sales Funnel Components</h3>
-              <ul style={{ listStyle: 'none', color: '#8b949e', fontSize: '0.95rem' }}>
-                <li style={{ padding: '0.5rem 0' }}>✓ Landing/Squeeze page</li>
-                <li style={{ padding: '0.5rem 0' }}>✓ Lead magnet (PDF, checklist, template)</li>
-                <li style={{ padding: '0.5rem 0' }}>✓ Email capture form</li>
-                <li style={{ padding: '0.5rem 0' }}>✓ Thank you page</li>
-                <li style={{ padding: '0.5rem 0' }}>✓ Sales/confirmation page</li>
-                <li style={{ padding: '0.5rem 0' }}>✓ Checkout & payment flow</li>
-                <li style={{ padding: '0.5rem 0' }}>✓ Upsell/downsell pages</li>
-              </ul>
-            </div>
-            {/* Ad Strategy */}
-            <div style={{ padding: '1.5rem', background: 'rgba(255, 107, 53, 0.05)', borderRadius: '16px' }}>
-              <h3 style={{ color: '#ff6b35', marginBottom: '1rem', fontSize: '1.1rem' }}>📢 Ad Campaign Setup</h3>
-              <ul style={{ listStyle: 'none', color: '#8b949e', fontSize: '0.95rem' }}>
-                <li style={{ padding: '0.5rem 0' }}>✓ Facebook/Instagram ad campaigns</li>
-                <li style={{ padding: '0.5rem 0' }}>✓ Google Ads campaign structure</li>
-                <li style={{ padding: '0.5rem 0' }}>✓ Audience targeting setup</li>
-                <li style={{ padding: '0.5rem 0' }}>✓ Ad creative brief & guidelines</li>
-                <li style={{ padding: '0.5rem 0' }}>✓ Retargeting pixel installation</li>
-                <li style={{ padding: '0.5rem 0' }}>✓ Conversion tracking setup</li>
-                <li style={{ padding: '0.5rem 0' }}>✓ Budget allocation strategy</li>
-              </ul>
-            </div>
-          </div>
-        </div>
-
-        {/* Social Proof */}
-        <div style={{ 
-          background: '#111920', 
-          borderRadius: '20px', 
-          padding: '3rem',
-          marginBottom: '3rem',
-          border: '1px solid rgba(45, 212, 191, 0.12)'
-        }}>
-          <h2 style={{ textAlign: 'center', fontSize: '2rem', marginBottom: '2rem' }}>
-            Why Choose <span style={{ color: '#2dd4bf' }}>Ascendant Strategy</span>?
-          </h2>
-          <div style={{ display: 'grid', gridTemplateColumns: 'repeat(4, 1fr)', gap: '2rem', textAlign: 'center' }}>
-            <div>
-              <div style={{ fontSize: '2.5rem', marginBottom: '1rem' }}>⚡</div>
-              <div style={{ fontWeight: 600, marginBottom: '0.5rem' }}>Results in Days</div>
-              <div style={{ color: '#8b949e', fontSize: '0.9rem' }}>Not months. Your funnel live within 2 weeks.</div>
-            </div>
-            <div>
-              <div style={{ fontSize: '2.5rem', marginBottom: '1rem' }}>💰</div>
-              <div style={{ fontWeight: 600, marginBottom: '0.5rem' }}>10x ROI</div>
-              <div style={{ color: '#8b949e', fontSize: '0.9rem' }}>Our clients average 10x return within 90 days.</div>
-            </div>
-            <div>
-              <div style={{ fontSize: '2.5rem', marginBottom: '1rem' }}>🎯</div>
-              <div style={{ fontWeight: 600, marginBottom: '0.5rem' }}>Zero Risk</div>
-              <div style={{ color: '#8b949e', fontSize: '0.9rem' }}>Money-back guarantee on every package.</div>
-            </div>
-            <div>
-              <div style={{ fontSize: '2.5rem', marginBottom: '1rem' }}>🏆</div>
-              <div style={{ fontWeight: 600, marginBottom: '0.5rem' }}>200+ Funnels</div>
-              <div style={{ color: '#8b949e', fontSize: '0.9rem' }}>Built and counting. Proven track record.</div>
-            </div>
-          </div>
-        </div>
-
         {/* FAQ */}
-        <div style={{ textAlign: 'center', padding: '4rem 2rem', background: '#0f1419', borderRadius: '20px', border: '1px solid rgba(45, 212, 191, 0.12)' }}>
-          <h2 style={{ fontSize: '2rem', marginBottom: '1rem' }}>Frequently Asked Questions</h2>
+        <div style={{ textAlign: 'center', padding: '4rem 2rem', background: '#fff', borderRadius: '20px', border: '1px solid rgba(0,0,0,0.05)' }}>
+          <h2 style={{ fontSize: '2rem', marginBottom: '1rem', fontFamily: 'Space Grotesk, sans-serif' }}>Frequently Asked Questions</h2>
           <div style={{ maxWidth: '700px', margin: '0 auto', textAlign: 'left' }}>
-            <div style={{ marginBottom: '1.5rem', padding: '1.5rem', background: '#111920', borderRadius: '12px' }}>
-              <div style={{ fontWeight: 600, marginBottom: '0.5rem', color: '#2dd4bf' }}>What's included in the ad campaign setup?</div>
-              <div style={{ color: '#8b949e' }}>We create your campaign structure, define target audiences, set up conversion tracking, and provide ad creative guidelines. You handle the ad spend — we handle the strategy.</div>
+            <div style={{ marginBottom: '1.5rem', padding: '1.5rem', background: '#fafafa', borderRadius: '12px' }}>
+              <div style={{ fontWeight: 600, marginBottom: '0.5rem', color: '#dc2626' }}>What's included in the ad campaign setup?</div>
+              <div style={{ color: '#71717a' }}>We create your campaign structure, define target audiences, set up conversion tracking, and provide ad creative guidelines. You handle the ad spend — we handle the strategy.</div>
             </div>
-            <div style={{ marginBottom: '1.5rem', padding: '1.5rem', background: '#111920', borderRadius: '12px' }}>
-              <div style={{ fontWeight: 600, marginBottom: '0.5rem', color: '#2dd4bf' }}>How long does it take?</div>
-              <div style={{ color: '#8b949e' }}>Strategy Session: 3-5 days. Full Implementation: 2-3 weeks. Growth Partner: First funnel in 2 weeks, then rolling.</div>
+            <div style={{ marginBottom: '1.5rem', padding: '1.5rem', background: '#fafafa', borderRadius: '12px' }}>
+              <div style={{ fontWeight: 600, marginBottom: '0.5rem', color: '#dc2626' }}>How long does it take?</div>
+              <div style={{ color: '#71717a' }}>Strategy Session: 3-5 days. Full Implementation: 2-3 weeks. Growth Partner: First funnel in 2 weeks, then rolling.</div>
             </div>
-            <div style={{ marginBottom: '1.5rem', padding: '1.5rem', background: '#111920', borderRadius: '12px' }}>
-              <div style={{ fontWeight: 600, marginBottom: '0.5rem', color: '#2dd4bf' }}>Do I need email marketing software?</div>
-              <div style={{ color: '#8b949e' }}>We'll set you up with Mailchimp or ConvertKit (free tier works fine to start). We handle the automation setup — you just need an account.</div>
+            <div style={{ marginBottom: '1.5rem', padding: '1.5rem', background: '#fafafa', borderRadius: '12px' }}>
+              <div style={{ fontWeight: 600, marginBottom: '0.5rem', color: '#dc2626' }}>Do I need email marketing software?</div>
+              <div style={{ color: '#71717a' }}>We'll set you up with Mailchimp or ConvertKit (free tier works fine to start). We handle the automation setup — you just need an account.</div>
             </div>
-            <div style={{ marginBottom: '1.5rem', padding: '1.5rem', background: '#111920', borderRadius: '12px' }}>
-              <div style={{ fontWeight: 600, marginBottom: '0.5rem', color: '#2dd4bf' }}>Can I get a refund?</div>
-              <div style={{ color: '#8b949e' }}>Yes! We offer a 100% money-back guarantee on all packages. If you're not happy, we'll refund you in full.</div>
+            <div style={{ padding: '1.5rem', background: '#fafafa', borderRadius: '12px' }}>
+              <div style={{ fontWeight: 600, marginBottom: '0.5rem', color: '#dc2626' }}>Can I get a refund?</div>
+              <div style={{ color: '#71717a' }}>Yes! We offer a 100% money-back guarantee on all packages. If you're not happy, we'll refund you in full.</div>
             </div>
           </div>
-          <p style={{ marginTop: '2rem', color: '#8b949e', fontSize: '0.9rem' }}>
-            Still have questions? <Link to="/contact" style={{ color: '#2dd4bf' }}>Contact us</Link> directly
+          <p style={{ marginTop: '2rem', color: '#71717a', fontSize: '0.9rem' }}>
+            Still have questions? <Link to="/contact" style={{ color: '#dc2626' }}>Contact us</Link> directly
           </p>
         </div>
       </div>
 
       <style>{`
-        @keyframes pulse {
-          0%, 100% { transform: scale(1); }
-          50% { transform: scale(1.02); }
-        }
+        @import url('https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&display=swap');
       `}</style>
     </div>
   )

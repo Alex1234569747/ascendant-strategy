@@ -24,7 +24,7 @@ export default function Landing() {
             <Link to="/pricing" className="nav-link pricing-link">Pricing</Link>
             <Link to="/contact" className="nav-link">Contact</Link>
           </div>
-          <Link to="/quiz" className="nav-cta pulse">
+          <Link to="/quiz" className="nav-cta">
             Start Free Quiz →
           </Link>
         </div>

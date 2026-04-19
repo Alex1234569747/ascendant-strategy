@@ -192,66 +192,53 @@ export default function Quiz() {
     const recommendedService = SERVICES.find(s => s.id === analysis.recommendedService)
 
     return (
-      <div style={{ minHeight: '100vh', background: '#0a0f14', color: '#e8eaed', padding: '4rem 1.5rem' }}>
+      <div style={{ minHeight: '100vh', background: '#fafafa', color: '#18181b', padding: '4rem 1.5rem' }}>
         <div style={{ maxWidth: '1200px', margin: '0 auto' }}>
-          {/* Urgency Banner */}
-          <div style={{ 
-            background: 'linear-gradient(90deg, #ff6b35, #f7c948)',
-            color: '#0a0f14',
-            textAlign: 'center',
-            padding: '1rem',
-            fontWeight: 700,
-            borderRadius: '16px',
-            marginBottom: '2rem'
-          }}>
-            🎉 Limited Time: Get up to $1,400+ in bonuses FREE with your order today!
-          </div>
-
           <div style={{ textAlign: 'center', marginBottom: '3rem' }}>
-            <div style={{ color: '#2dd4bf', fontSize: '0.85rem', marginBottom: '1rem', textTransform: 'uppercase', letterSpacing: '0.1em' }}>
+            <div style={{ color: '#dc2626', fontSize: '0.8rem', marginBottom: '1rem', textTransform: 'uppercase', letterSpacing: '0.1em', fontWeight: 600 }}>
               Your Personalized Strategy
             </div>
-            <h1 style={{ fontSize: '3rem', marginBottom: '1rem' }}>
-              Analysis <span style={{ background: 'linear-gradient(135deg, #2dd4bf, #5eead4)', WebkitBackgroundClip: 'text', WebkitTextFillColor: 'transparent' }}>Complete</span>
+            <h1 style={{ fontSize: 'clamp(2rem, 4vw, 3rem)', marginBottom: '1rem', fontFamily: 'Space Grotesk, sans-serif', fontWeight: 700 }}>
+              Analysis <span style={{ color: '#dc2626' }}>Complete</span>
             </h1>
-            <p style={{ color: '#8b949e', fontSize: '1.1rem' }}>
-              Based on your responses, here's the complete funnel system we recommend
+            <p style={{ color: '#71717a', fontSize: '1.1rem' }}>
+              Based on your responses, here's the complete funnel system we recommend.
             </p>
           </div>
 
           {/* Summary Cards */}
           <div style={{ display: 'grid', gridTemplateColumns: 'repeat(3, 1fr)', gap: '1.5rem', marginBottom: '4rem' }}>
-            <div style={{ background: '#111920', border: '1px solid rgba(45, 212, 191, 0.12)', borderRadius: '16px', padding: '2rem', textAlign: 'center' }}>
+            <div style={{ background: '#fff', border: '1px solid rgba(0,0,0,0.08)', borderRadius: '16px', padding: '2rem', textAlign: 'center' }}>
               <div style={{ fontSize: '2rem', marginBottom: '1rem' }}>🎯</div>
-              <h3 style={{ fontSize: '0.85rem', color: '#8b949e', marginBottom: '1rem' }}>Your Focus Area</h3>
-              <p style={{ fontSize: '1.1rem' }}>{answers.challenge || 'Growth'}</p>
+              <h3 style={{ fontSize: '0.8rem', color: '#71717a', marginBottom: '1rem', textTransform: 'uppercase', letterSpacing: '0.05em' }}>Your Focus Area</h3>
+              <p style={{ fontSize: '1.1rem', fontWeight: 600 }}>{answers.challenge || 'Growth'}</p>
             </div>
-            <div style={{ background: '#111920', border: '1px solid rgba(45, 212, 191, 0.12)', borderRadius: '16px', padding: '2rem', textAlign: 'center' }}>
+            <div style={{ background: '#fff', border: '1px solid rgba(0,0,0,0.08)', borderRadius: '16px', padding: '2rem', textAlign: 'center' }}>
               <div style={{ fontSize: '2rem', marginBottom: '1rem' }}>💡</div>
-              <h3 style={{ fontSize: '0.85rem', color: '#8b949e', marginBottom: '1rem' }}>Your Goal</h3>
-              <p style={{ fontSize: '1.1rem' }}>{answers.revenueGoal || '$10K - $25K'}/month</p>
+              <h3 style={{ fontSize: '0.8rem', color: '#71717a', marginBottom: '1rem', textTransform: 'uppercase', letterSpacing: '0.05em' }}>Your Goal</h3>
+              <p style={{ fontSize: '1.1rem', fontWeight: 600 }}>{answers.revenueGoal || '$10K - $25K'}/month</p>
             </div>
-            <div style={{ background: 'rgba(45, 212, 191, 0.15)', border: '1px solid #2dd4bf', borderRadius: '16px', padding: '2rem', textAlign: 'center' }}>
+            <div style={{ background: 'rgba(220, 38, 38, 0.05)', border: '2px solid #dc2626', borderRadius: '16px', padding: '2rem', textAlign: 'center' }}>
               <div style={{ fontSize: '2rem', marginBottom: '1rem' }}>🚀</div>
-              <h3 style={{ fontSize: '0.85rem', color: '#8b949e', marginBottom: '1rem' }}>Recommended Package</h3>
-              <p style={{ fontSize: '1.25rem', fontWeight: 600 }}>{recommendedService?.name}</p>
-              <p style={{ color: '#2dd4bf' }}>Now <strong>NZ${recommendedService?.price}</strong> <span style={{ textDecoration: 'line-through', color: '#8b949e', fontSize: '0.9rem' }}>NZ${recommendedService?.originalPrice}</span></p>
+              <h3 style={{ fontSize: '0.8rem', color: '#71717a', marginBottom: '1rem', textTransform: 'uppercase', letterSpacing: '0.05em' }}>Recommended Package</h3>
+              <p style={{ fontSize: '1.1rem', fontWeight: 600 }}>{recommendedService?.name}</p>
+              <p style={{ color: '#dc2626' }}>Now <strong>NZ${recommendedService?.price}</strong> <span style={{ textDecoration: 'line-through', color: '#a1a1aa', fontSize: '0.9rem' }}>NZ${recommendedService?.originalPrice}</span></p>
             </div>
           </div>
 
-          <h2 style={{ textAlign: 'center', fontSize: '2rem', marginBottom: '2rem' }}>Choose Your Package</h2>
+          <h2 style={{ textAlign: 'center', fontSize: '2rem', marginBottom: '2rem', fontFamily: 'Space Grotesk, sans-serif' }}>Choose Your Package</h2>
           
           {/* Pricing Cards */}
           <div style={{ display: 'grid', gridTemplateColumns: 'repeat(3, 1fr)', gap: '2rem', marginBottom: '3rem' }}>
             {SERVICES.map((service) => (
               <div key={service.id} style={{ 
-                background: '#111920', 
-                border: service.recommended ? '2px solid #2dd4bf' : '1px solid rgba(45, 212, 191, 0.12)', 
+                background: '#fff', 
+                border: service.recommended ? '2px solid #dc2626' : '1px solid rgba(0,0,0,0.08)', 
                 borderRadius: '20px', 
                 padding: '2rem',
                 textAlign: 'center',
                 position: 'relative',
-                boxShadow: service.recommended ? '0 0 60px rgba(45, 212, 191, 0.15)' : 'none'
+                boxShadow: service.recommended ? '0 20px 60px rgba(220, 38, 38, 0.15)' : 'none'
               }}>
                 {service.recommended && (
                   <div style={{ 
@@ -259,41 +246,40 @@ export default function Quiz() {
                     top: '-14px', 
                     left: '50%', 
                     transform: 'translateX(-50%)',
-                    background: 'linear-gradient(135deg, #2dd4bf, #5eead4)',
-                    color: '#0a0f14',
+                    background: '#dc2626',
+                    color: '#fff',
                     padding: '0.5rem 1.5rem',
-                    fontSize: '0.8rem',
+                    fontSize: '0.75rem',
                     fontWeight: 700,
                     borderRadius: '50px'
                   }}>
-                    ⭐ BEST VALUE
+                    ⭐ Best Value
                   </div>
                 )}
 
-                {/* Spots Left */}
                 <div style={{ 
                   position: 'absolute', 
                   top: '0.75rem', 
                   right: '0.75rem',
-                  background: service.spotsLeft <= 2 ? '#ff5252' : 'rgba(45, 212, 191, 0.15)',
-                  color: service.spotsLeft <= 2 ? '#fff' : '#2dd4bf',
+                  background: service.spotsLeft <= 2 ? '#dc2626' : 'rgba(220, 38, 38, 0.1)',
+                  color: service.spotsLeft <= 2 ? '#fff' : '#dc2626',
                   padding: '0.3rem 0.6rem',
                   fontSize: '0.7rem',
                   fontWeight: 600,
                   borderRadius: '4px'
                 }}>
-                  {service.spotsLeft <= 2 ? '🚨 ' : '• '}{service.spotsLeft} left
+                  {service.spotsLeft} left
                 </div>
                 
-                <h3 style={{ fontSize: '1.25rem', marginBottom: '0.25rem' }}>{service.name}</h3>
-                <p style={{ fontSize: '0.8rem', color: '#2dd4bf', marginBottom: '1rem' }}>{service.tagline}</p>
+                <h3 style={{ fontSize: '1.2rem', marginBottom: '0.25rem', fontFamily: 'Space Grotesk, sans-serif', fontWeight: 600 }}>{service.name}</h3>
+                <p style={{ fontSize: '0.75rem', color: '#dc2626', marginBottom: '1rem', textTransform: 'uppercase', letterSpacing: '0.05em' }}>{service.tagline}</p>
                 
                 <div style={{ marginBottom: '0.5rem' }}>
-                  <span style={{ color: '#2dd4bf', fontSize: '1.25rem' }}>NZ$</span>
-                  <span style={{ fontSize: '3rem', fontWeight: 700 }}>{service.price}</span>
+                  <span style={{ color: '#dc2626', fontSize: '1.25rem', fontWeight: 600 }}>NZ$</span>
+                  <span style={{ fontSize: '3rem', fontWeight: 700, fontFamily: 'Space Grotesk, sans-serif' }}>{service.price}</span>
                 </div>
                 <div style={{ 
-                  background: '#ff5252', 
+                  background: '#dc2626', 
                   color: '#fff', 
                   padding: '0.2rem 0.5rem', 
                   borderRadius: '4px', 
@@ -307,34 +293,32 @@ export default function Quiz() {
                 
                 <ul style={{ listStyle: 'none', textAlign: 'left', marginBottom: '1rem', maxHeight: '180px', overflowY: 'auto' }}>
                   {service.features.map((f, i) => (
-                    <li key={i} style={{ padding: '0.4rem 0', color: '#8b949e', fontSize: '0.85rem' }}>
+                    <li key={i} style={{ padding: '0.4rem 0', color: '#52525b', fontSize: '0.85rem' }}>
                       ✓ {f}
                     </li>
                   ))}
                 </ul>
 
-                {/* Bonuses */}
                 <div style={{ 
-                  background: 'rgba(255, 107, 53, 0.1)', 
-                  border: '1px solid rgba(255, 107, 53, 0.3)',
+                  background: 'rgba(220, 38, 38, 0.05)', 
+                  border: '1px solid rgba(220, 38, 38, 0.15)',
                   borderRadius: '8px',
                   padding: '0.75rem',
                   marginBottom: '1rem'
                 }}>
-                  <div style={{ color: '#ff6b35', fontSize: '0.7rem', fontWeight: 700, marginBottom: '0.5rem' }}>🎁 BONUSES</div>
+                  <div style={{ color: '#dc2626', fontSize: '0.7rem', fontWeight: 700, marginBottom: '0.5rem' }}>🎁 BONUSES</div>
                   {service.bonuses.map((bonus, i) => (
-                    <div key={i} style={{ color: '#e8eaed', fontSize: '0.75rem', padding: '0.2rem 0' }}>{bonus}</div>
+                    <div key={i} style={{ fontSize: '0.75rem', padding: '0.2rem 0', color: '#71717a' }}>{bonus}</div>
                   ))}
                 </div>
 
-                {/* Guarantee */}
                 <div style={{ 
-                  background: 'rgba(45, 212, 191, 0.08)', 
+                  background: 'rgba(220, 38, 38, 0.05)', 
                   borderRadius: '6px',
                   padding: '0.5rem',
                   marginBottom: '1rem'
                 }}>
-                  <span style={{ color: '#2dd4bf', fontSize: '0.75rem' }}>🛡️ {service.guarantee}</span>
+                  <span style={{ color: '#dc2626', fontSize: '0.75rem' }}>🛡️ {service.guarantee}</span>
                 </div>
                 
                 <Link 
@@ -342,15 +326,14 @@ export default function Quiz() {
                   style={{ 
                     display: 'block',
                     padding: '1rem',
-                    background: 'linear-gradient(135deg, #2dd4bf, #5eead4)',
-                    border: 'none',
-                    color: '#0a0f14',
+                    background: service.recommended ? '#dc2626' : 'transparent',
+                    border: '2px solid #dc2626',
+                    color: service.recommended ? '#fff' : '#dc2626',
                     fontWeight: 700,
                     borderRadius: '10px',
                     textDecoration: 'none',
                     textTransform: 'uppercase',
-                    fontSize: '0.9rem',
-                    boxShadow: '0 6px 25px rgba(45, 212, 191, 0.3)'
+                    fontSize: '0.85rem'
                   }}
                 >
                   Get Started →
@@ -359,53 +342,53 @@ export default function Quiz() {
             ))}
           </div>
 
-          <div style={{ textAlign: 'center', paddingTop: '2rem', borderTop: '1px solid rgba(45, 212, 191, 0.12)' }}>
-            <div style={{ display: 'flex', justifyContent: 'center', gap: '2rem' }}>
-              <button 
-                onClick={() => setShowResults(false)} 
-                style={{ 
-                  background: 'none', 
-                  border: '1px solid rgba(45, 212, 191, 0.12)', 
-                  color: '#8b949e', 
-                  cursor: 'pointer',
-                  padding: '0.75rem 1.5rem',
-                  borderRadius: '10px'
-                }}
-              >
-                ← Back to Quiz
-              </button>
-              <p style={{ color: '#8b949e' }}>
-                Have questions? <Link to="/contact" style={{ color: '#2dd4bf' }}>Contact us</Link> directly
-              </p>
-            </div>
+          <div style={{ textAlign: 'center', paddingTop: '2rem' }}>
+            <button 
+              onClick={() => setShowResults(false)} 
+              style={{ 
+                background: 'none', 
+                border: '1px solid rgba(0,0,0,0.15)', 
+                color: '#71717a', 
+                cursor: 'pointer',
+                padding: '0.75rem 1.5rem',
+                borderRadius: '10px',
+                fontSize: '0.9rem'
+              }}
+            >
+              ← Back to Quiz
+            </button>
           </div>
         </div>
+
+        <style>{`
+          @import url('https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&display=swap');
+        `}</style>
       </div>
     )
   }
 
   return (
-    <div style={{ minHeight: '100vh', background: '#0a0f14', color: '#e8eaed', padding: '4rem 1.5rem' }}>
+    <div style={{ minHeight: '100vh', background: '#fafafa', color: '#18181b', padding: '4rem 1.5rem' }}>
       <div style={{ maxWidth: '700px', margin: '0 auto' }}>
         <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '2rem' }}>
-          <Link to="/" style={{ display: 'flex', alignItems: 'center', gap: '0.5rem', textDecoration: 'none', color: '#e8eaed', fontSize: '1.1rem' }}>
-            <span style={{ color: '#2dd4bf' }}>◆</span> Ascendant Strategy
+          <Link to="/" style={{ display: 'flex', alignItems: 'center', gap: '0.5rem', textDecoration: 'none', color: '#18181b', fontFamily: 'Space Grotesk, sans-serif', fontSize: '1.1rem', fontWeight: 700 }}>
+            <span style={{ color: '#dc2626' }}>▲</span> Ascendant Strategy
           </Link>
-          <span style={{ fontSize: '0.85rem', color: '#8b949e', padding: '0.5rem 1rem', background: '#111920', borderRadius: '20px' }}>
+          <span style={{ fontSize: '0.8rem', color: '#71717a', padding: '0.5rem 1rem', background: '#fff', borderRadius: '20px', border: '1px solid rgba(0,0,0,0.08)' }}>
             {step.title}
           </span>
         </div>
 
         <div style={{ display: 'flex', alignItems: 'center', gap: '1rem', marginBottom: '3rem' }}>
-          <div style={{ flex: 1, height: '4px', background: 'rgba(45, 212, 191, 0.12)', borderRadius: '2px' }}>
-            <div style={{ width: `${progress}%`, height: '100%', background: '#2dd4bf', borderRadius: '2px', transition: 'width 0.3s' }} />
+          <div style={{ flex: 1, height: '6px', background: 'rgba(0,0,0,0.08)', borderRadius: '3px' }}>
+            <div style={{ width: `${progress}%`, height: '100%', background: '#dc2626', borderRadius: '3px', transition: 'width 0.3s' }} />
           </div>
-          <span style={{ fontSize: '0.85rem', color: '#8b949e', whiteSpace: 'nowrap' }}>
+          <span style={{ fontSize: '0.8rem', color: '#71717a', whiteSpace: 'nowrap', fontWeight: 500 }}>
             {currentStep + 1} of {STEPS.length}
           </span>
         </div>
 
-        <h2 style={{ fontSize: '2rem', marginBottom: '2rem', fontFamily: 'Playfair Display, serif' }}>
+        <h2 style={{ fontSize: 'clamp(1.5rem, 3vw, 2rem)', marginBottom: '2rem', fontFamily: 'Space Grotesk, sans-serif', fontWeight: 600 }}>
           {step.id === 'business' && 'What type of business are you in?'}
           {step.id === 'revenue' && 'What\'s your current monthly revenue?'}
           {step.id === 'goal' && 'What\'s your revenue goal?'}
@@ -421,14 +404,15 @@ export default function Quiz() {
               key={opt.value}
               onClick={() => setAnswers(prev => ({ ...prev, businessType: opt.value }))}
               style={{
-                padding: '1.5rem',
-                background: answers.businessType === opt.value ? 'rgba(45, 212, 191, 0.15)' : '#111920',
-                border: answers.businessType === opt.value ? '1px solid #2dd4bf' : '1px solid rgba(45, 212, 191, 0.12)',
+                padding: '1.25rem',
+                background: answers.businessType === opt.value ? 'rgba(220, 38, 38, 0.1)' : '#fff',
+                border: answers.businessType === opt.value ? '2px solid #dc2626' : '1px solid rgba(0,0,0,0.08)',
                 borderRadius: '12px',
-                color: '#e8eaed',
+                color: '#18181b',
                 cursor: 'pointer',
-                fontSize: '0.95rem',
-                transition: 'all 0.3s'
+                fontSize: '0.9rem',
+                transition: 'all 0.3s',
+                fontWeight: 500
               }}
             >
               {opt.label}
@@ -440,13 +424,15 @@ export default function Quiz() {
               key={opt}
               onClick={() => setAnswers(prev => ({ ...prev, currentRevenue: opt }))}
               style={{
-                padding: '1.5rem',
-                background: answers.currentRevenue === opt ? 'rgba(45, 212, 191, 0.15)' : '#111920',
-                border: answers.currentRevenue === opt ? '1px solid #2dd4bf' : '1px solid rgba(45, 212, 191, 0.12)',
+                padding: '1.25rem',
+                background: answers.currentRevenue === opt ? 'rgba(220, 38, 38, 0.1)' : '#fff',
+                border: answers.currentRevenue === opt ? '2px solid #dc2626' : '1px solid rgba(0,0,0,0.08)',
                 borderRadius: '12px',
-                color: '#e8eaed',
+                color: '#18181b',
                 cursor: 'pointer',
-                transition: 'all 0.3s'
+                fontSize: '0.9rem',
+                transition: 'all 0.3s',
+                fontWeight: 500
               }}
             >
               {opt}
@@ -458,13 +444,15 @@ export default function Quiz() {
               key={opt.value}
               onClick={() => setAnswers(prev => ({ ...prev, revenueGoal: opt.value }))}
               style={{
-                padding: '1.5rem',
-                background: answers.revenueGoal === opt.value ? 'rgba(45, 212, 191, 0.15)' : '#111920',
-                border: answers.revenueGoal === opt.value ? '1px solid #2dd4bf' : '1px solid rgba(45, 212, 191, 0.12)',
+                padding: '1.25rem',
+                background: answers.revenueGoal === opt.value ? 'rgba(220, 38, 38, 0.1)' : '#fff',
+                border: answers.revenueGoal === opt.value ? '2px solid #dc2626' : '1px solid rgba(0,0,0,0.08)',
                 borderRadius: '12px',
-                color: '#e8eaed',
+                color: '#18181b',
                 cursor: 'pointer',
-                transition: 'all 0.3s'
+                fontSize: '0.9rem',
+                transition: 'all 0.3s',
+                fontWeight: 500
               }}
             >
               {opt.label}
@@ -476,19 +464,20 @@ export default function Quiz() {
               key={opt.value}
               onClick={() => setAnswers(prev => ({ ...prev, challenge: opt.value }))}
               style={{
-                padding: '1.5rem',
-                background: answers.challenge === opt.value ? 'rgba(45, 212, 191, 0.15)' : '#111920',
-                border: answers.challenge === opt.value ? '1px solid #2dd4bf' : '1px solid rgba(45, 212, 191, 0.12)',
+                padding: '1.25rem',
+                background: answers.challenge === opt.value ? 'rgba(220, 38, 38, 0.1)' : '#fff',
+                border: answers.challenge === opt.value ? '2px solid #dc2626' : '1px solid rgba(0,0,0,0.08)',
                 borderRadius: '12px',
-                color: '#e8eaed',
+                color: '#18181b',
                 cursor: 'pointer',
                 display: 'flex',
                 alignItems: 'center',
                 gap: '0.75rem',
-                transition: 'all 0.3s'
+                transition: 'all 0.3s',
+                fontWeight: 500
               }}
             >
-              <span style={{ fontSize: '1.5rem' }}>{opt.icon}</span>
+              <span style={{ fontSize: '1.25rem' }}>{opt.icon}</span>
               <span>{opt.label}</span>
             </button>
           ))}
@@ -498,18 +487,18 @@ export default function Quiz() {
               key={opt.value}
               onClick={() => setAnswers(prev => ({ ...prev, timeline: opt.value }))}
               style={{
-                padding: '1.5rem',
-                background: answers.timeline === opt.value ? 'rgba(45, 212, 191, 0.15)' : '#111920',
-                border: answers.timeline === opt.value ? '1px solid #2dd4bf' : '1px solid rgba(45, 212, 191, 0.12)',
+                padding: '1.25rem',
+                background: answers.timeline === opt.value ? 'rgba(220, 38, 38, 0.1)' : '#fff',
+                border: answers.timeline === opt.value ? '2px solid #dc2626' : '1px solid rgba(0,0,0,0.08)',
                 borderRadius: '12px',
-                color: '#e8eaed',
+                color: '#18181b',
                 cursor: 'pointer',
                 textAlign: 'left',
                 transition: 'all 0.3s'
               }}
             >
-              <div style={{ fontWeight: 500 }}>{opt.label}</div>
-              <div style={{ fontSize: '0.8rem', color: '#8b949e' }}>{opt.desc}</div>
+              <div style={{ fontWeight: 600 }}>{opt.label}</div>
+              <div style={{ fontSize: '0.8rem', color: '#71717a' }}>{opt.desc}</div>
             </button>
           ))}
 
@@ -518,25 +507,25 @@ export default function Quiz() {
               key={opt.value}
               onClick={() => setAnswers(prev => ({ ...prev, budget: opt.value }))}
               style={{
-                padding: '1.5rem',
-                background: answers.budget === opt.value ? 'rgba(45, 212, 191, 0.15)' : '#111920',
-                border: answers.budget === opt.value ? '1px solid #2dd4bf' : '1px solid rgba(45, 212, 191, 0.12)',
+                padding: '1.25rem',
+                background: answers.budget === opt.value ? 'rgba(220, 38, 38, 0.1)' : '#fff',
+                border: answers.budget === opt.value ? '2px solid #dc2626' : '1px solid rgba(0,0,0,0.08)',
                 borderRadius: '12px',
-                color: '#e8eaed',
+                color: '#18181b',
                 cursor: 'pointer',
                 textAlign: 'left',
                 transition: 'all 0.3s'
               }}
             >
-              <div style={{ fontWeight: 500 }}>{opt.label}</div>
-              <div style={{ fontSize: '0.8rem', color: '#8b949e' }}>{opt.desc}</div>
+              <div style={{ fontWeight: 600 }}>{opt.label}</div>
+              <div style={{ fontSize: '0.8rem', color: '#71717a' }}>{opt.desc}</div>
             </button>
           ))}
 
           {step.id === 'contact' && (
             <div style={{ gridColumn: '1 / -1', display: 'flex', flexDirection: 'column', gap: '1.5rem' }}>
               <div>
-                <label style={{ display: 'block', fontSize: '0.85rem', color: '#8b949e', marginBottom: '0.5rem' }}>Your Name *</label>
+                <label style={{ display: 'block', fontSize: '0.85rem', color: '#71717a', marginBottom: '0.5rem', fontWeight: 500 }}>Your Name *</label>
                 <input 
                   type="text" 
                   placeholder="John Smith"
@@ -545,28 +534,28 @@ export default function Quiz() {
                   style={{
                     width: '100%',
                     padding: '1rem 1.25rem',
-                    background: '#111920',
-                    border: '1px solid rgba(45, 212, 191, 0.12)',
+                    background: '#fff',
+                    border: '1px solid rgba(0,0,0,0.1)',
                     borderRadius: '10px',
-                    color: '#e8eaed',
+                    color: '#18181b',
                     fontSize: '1rem'
                   }}
                 />
               </div>
               <div>
-                <label style={{ display: 'block', fontSize: '0.85rem', color: '#8b949e', marginBottom: '0.5rem' }}>Email Address *</label>
+                <label style={{ display: 'block', fontSize: '0.85rem', color: '#71717a', marginBottom: '0.5rem', fontWeight: 500 }}>Email Address *</label>
                 <input 
-                  type="email" 
+                  type="email' 
                   placeholder="john@company.com"
                   value={answers.email}
                   onChange={(e) => setAnswers(prev => ({ ...prev, email: e.target.value }))}
                   style={{
                     width: '100%',
                     padding: '1rem 1.25rem',
-                    background: '#111920',
-                    border: '1px solid rgba(45, 212, 191, 0.12)',
+                    background: '#fff',
+                    border: '1px solid rgba(0,0,0,0.1)',
                     borderRadius: '10px',
-                    color: '#e8eaed',
+                    color: '#18181b',
                     fontSize: '1rem'
                   }}
                 />
@@ -575,16 +564,18 @@ export default function Quiz() {
           )}
         </div>
 
-        <div style={{ display: 'flex', gap: '1rem', paddingTop: '1rem', borderTop: '1px solid rgba(45, 212, 191, 0.12)' }}>
+        <div style={{ display: 'flex', gap: '1rem', paddingTop: '1rem', borderTop: '1px solid rgba(0,0,0,0.08)' }}>
           <button 
             onClick={handleBack}
             style={{
               padding: '1rem 1.5rem',
               background: 'transparent',
-              border: '1px solid rgba(45, 212, 191, 0.12)',
-              color: '#8b949e',
+              border: '1px solid rgba(0,0,0,0.15)',
+              color: '#71717a',
               borderRadius: '10px',
-              cursor: 'pointer'
+              cursor: 'pointer',
+              fontSize: '0.9rem',
+              fontWeight: 500
             }}
           >
             ← Back
@@ -595,9 +586,9 @@ export default function Quiz() {
             style={{
               flex: 1,
               padding: '1rem',
-              background: canProceed() ? '#2dd4bf' : 'rgba(45, 212, 191, 0.4)',
+              background: canProceed() ? '#dc2626' : 'rgba(220, 38, 38, 0.4)',
               border: 'none',
-              color: '#0a0f14',
+              color: '#fff',
               fontSize: '1rem',
               fontWeight: 600,
               borderRadius: '10px',
@@ -608,6 +599,10 @@ export default function Quiz() {
           </button>
         </div>
       </div>
+
+      <style>{`
+        @import url('https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&display=swap');
+      `}</style>
     </div>
   )
 }

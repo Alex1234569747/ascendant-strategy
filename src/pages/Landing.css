@@ -204,6 +204,8 @@
   box-shadow: 0 10px 30px rgba(220, 38, 38, 0.3);
 }
 
+/* Remove old pulse class from nav CTA - no longer needed */
+
 /* Hero Section */
 .hero {
   position: relative;
