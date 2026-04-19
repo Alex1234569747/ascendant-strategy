@@ -26,27 +26,25 @@ export default async function handler(req, res) {
   const pathname = req.url || ''
   console.log('API called:', pathname, 'method:', req.method)
   
-  // Try to get plan from query params
+  // Get plan from query
   let plan = ''
-  
-  const queryMatch = pathname.match(/[?&]plan=([^&]+)/)
-  if (queryMatch) {
-    plan = queryMatch[1]
-  }
+  const planMatch = req.query.plan || (req.url && req.url.match(/[?&]plan=([^&]+)/)?.[1])
+  if (planMatch) plan = planMatch
   
   // Test endpoint
   if (pathname.includes('test')) {
     return res.json({ 
       status: 'ok',
       plan: plan,
-      receivedPath: pathname
+      query: req.query
     })
   }
   
   // Checkout endpoint
   if (pathname.includes('create-checkout')) {
     if (!plan || !PLANS[plan]) {
-      return res.status(400).json({ error: 'Invalid plan', got: plan })
+      console.log('Invalid plan:', plan, 'Available:', Object.keys(PLANS))
+      return res.status(400).json({ error: 'Invalid plan', got: plan, available: Object.keys(PLANS) })
     }
     
     const session = await stripe.checkout.sessions.create({

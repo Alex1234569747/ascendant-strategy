@@ -10,7 +10,7 @@ export default function PaymentSuccess() {
 
   useEffect(() => {
     if (sessionId) {
-      fetch(`/api/payment/verify/${sessionId}`)
+      fetch(`/api/verify/${sessionId}`)
         .then(r => r.json())
         .then(data => {
           setVerified(data.success === true)

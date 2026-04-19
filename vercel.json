@@ -1,0 +1,9 @@
+{
+  "version": 2,
+  "rewrites": [
+    { "source": "/api/create-checkout", "destination": "/api/payment.js" },
+    { "source": "/api/test", "destination": "/api/payment.js" },
+    { "source": "/api/verify/(.*)", "destination": "/api/payment.js" },
+    { "source": "/api/webhook", "destination": "/api/payment.js" }
+  ]
+}

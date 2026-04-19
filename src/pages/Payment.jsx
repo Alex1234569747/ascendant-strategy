@@ -111,7 +111,7 @@ export default function Payment() {
     setError('')
 
     try {
-      const response = await fetch(`/api/payment/create-checkout?plan=${plan.id}`, {
+      const response = await fetch(`/api/create-checkout?plan=${plan.id}`, {
         method: 'GET',
         headers: { 'Content-Type': 'application/json' }
       })
