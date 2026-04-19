@@ -25,29 +25,28 @@ export default async function handler(req, res) {
 
   const pathname = req.url || ''
   
-  // Get body - handle different formats
-  let body = {}
-  if (req.body) {
-    if (typeof req.body === 'string') {
-      try { body = JSON.parse(req.body) } catch (e) { body = {} }
-    } else {
-      body = req.body
-    }
+  // Vercel parses body automatically, but also handles raw/string
+  let body = req.body
+  if (typeof body === 'string') {
+    try { body = JSON.parse(body) } catch (e) { body = {} }
   }
+  if (!body || typeof body !== 'object') {
+    body = {}
+  }
+  
+  // Extract plan from body (handles various field names)
+  const plan = body.plan || body.planId || body.product
+  const email = body.customerEmail || body.email || body.customer_email
   
   // Test endpoint
-  if (pathname === '/api/payment/test' || pathname === '/api/payment/test?') {
-    return res.json({ status: 'ok', message: 'API working' })
+  if (pathname.match(/^\/api\/payment\/test/)) {
+    return res.json({ status: 'ok', body: body, plan: plan })
   }
   
-  // Checkout endpoint - handle with or without trailing slash
-  const isCheckout = pathname.match(/^\/api\/payment\/create-checkout(\?.*)?$/)
-  if (req.method === 'POST' && isCheckout) {
-    const plan = body.plan
-    const email = body.customerEmail || body.email
-    
+  // Checkout endpoint
+  if (req.method === 'POST' && pathname.match(/^\/api\/payment\/create-checkout/)) {
     if (!plan || !PLANS[plan]) {
-      return res.status(400).json({ error: 'Invalid plan' })
+      return res.status(400).json({ error: 'Invalid plan', got: plan })
     }
     
     const priceInCents = PLANS[plan]
@@ -72,7 +71,7 @@ export default async function handler(req, res) {
   }
   
   // Verify endpoint
-  const verifyMatch = pathname.match(/^\/api\/payment\/verify\/([^/?]+)(\?.*)?$/)
+  const verifyMatch = pathname.match(/^\/api\/payment\/verify\/([^/?]+)/)
   if (req.method === 'GET' && verifyMatch) {
     const sessionId = verifyMatch[1]
     const session = await stripe.checkout.sessions.retrieve(sessionId)
@@ -86,7 +85,7 @@ export default async function handler(req, res) {
   }
   
   // Webhook
-  if (pathname === '/api/payment/webhook' || pathname.match(/^\/api\/payment\/webhook(\?.*)?$/)) {
+  if (pathname.match(/^\/api\/payment\/webhook/)) {
     const sig = req.headers['stripe-signature']
     let rawBody = req.body
     if (typeof rawBody === 'object' && rawBody !== null) {
