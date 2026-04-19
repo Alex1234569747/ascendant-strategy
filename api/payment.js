@@ -14,24 +14,23 @@ const PLAN_NAMES = {
   agency: 'Growth Partner Package'
 }
 
-async function parseRequestBody(req) {
-  // Try various methods to get the body
-  const contentType = req.headers['content-type'] || ''
-  
-  // If body is already an object, use it
-  if (req.body && typeof req.body === 'object' && !Array.isArray(req.body)) {
-    // Check if it has the expected keys
-    const keys = Object.keys(req.body)
+function parseBody(body) {
+  // Handle the weird Vercel double-parse issue
+  if (body && typeof body === 'object' && !Array.isArray(body)) {
+    const keys = Object.keys(body)
+    
+    // If there's exactly one key and it looks like JSON, parse it
     if (keys.length === 1) {
       const key = keys[0]
-      // If the key looks like JSON, parse it
-      if (key.startsWith('{') && key.endsWith('}')) {
+      if (typeof key === 'string' && key.includes('plan')) {
         try {
           return JSON.parse(key)
         } catch (e) {}
       }
     }
-    return req.body
+    
+    // Otherwise return as is
+    return body
   }
   
   return {}
@@ -48,25 +47,25 @@ export default async function handler(req, res) {
 
   const pathname = req.url || ''
   
-  // Parse body
-  const body = await parseRequestBody(req)
-  const plan = body.plan || body.planId || ''
-  const email = body.email || body.customerEmail || ''
+  // Parse body with fix for Vercel quirk
+  const body = parseBody(req.body)
+  const plan = body.plan || ''
+  const email = body.customerEmail || body.email || ''
   
   // Test endpoint
   if (pathname.match(/^\/api\/payment\/test/)) {
     return res.json({ 
       status: 'ok', 
       plan: plan,
-      body: body,
-      headers: req.headers
+      email: email,
+      body: body
     })
   }
   
   // Checkout endpoint
   if (req.method === 'POST' && pathname.match(/^\/api\/payment\/create-checkout/)) {
     if (!plan || !PLANS[plan]) {
-      return res.status(400).json({ error: 'Invalid plan', got: plan, body: body })
+      return res.status(400).json({ error: 'Invalid plan', got: plan })
     }
     
     const session = await stripe.checkout.sessions.create({
