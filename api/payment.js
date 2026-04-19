@@ -25,30 +25,12 @@ export default async function handler(req, res) {
 
   const pathname = req.url || ''
   
-  // Try to get plan from query params as fallback
+  // Try to get plan from query params
   let plan = ''
-  let email = ''
   
-  // Try query string
   const queryMatch = pathname.match(/[?&]plan=([^&]+)/)
   if (queryMatch) {
     plan = queryMatch[1]
-  }
-  
-  // If no query plan, try body
-  if (!plan) {
-    const rawBody = req.body
-    if (rawBody && typeof rawBody === 'object') {
-      const keys = Object.keys(rawBody)
-      if (keys.length === 1) {
-        // Extract from escaped JSON key
-        const key = keys[0]
-        const planMatch = key.match(/"plan"\s*:\s*"([^"]+)"/)
-        if (planMatch) {
-          plan = planMatch[1]
-        }
-      }
-    }
   }
   
   // Test endpoint
@@ -56,13 +38,12 @@ export default async function handler(req, res) {
     return res.json({ 
       status: 'ok',
       plan: plan,
-      success: plan === 'full',
-      url: pathname
+      success: plan === 'full'
     })
   }
   
-  // Checkout endpoint
-  if (req.method === 'POST' && pathname.match(/^\/api\/payment\/create-checkout/)) {
+  // Checkout endpoint - accept GET or POST
+  if (pathname.match(/^\/api\/payment\/create-checkout/)) {
     if (!plan || !PLANS[plan]) {
       return res.status(400).json({ error: 'Invalid plan', got: plan })
     }
@@ -86,17 +67,22 @@ export default async function handler(req, res) {
   
   // Verify endpoint
   const verifyMatch = pathname.match(/^\/api\/payment\/verify\/([^/?]+)/)
-  if (req.method === 'GET' && verifyMatch) {
-    const session = await stripe.checkout.sessions.retrieve(verifyMatch[1])
-    return res.json({
-      success: session.payment_status === 'paid',
-      status: session.status
-    })
+  if (verifyMatch) {
+    try {
+      const session = await stripe.checkout.sessions.retrieve(verifyMatch[1])
+      return res.json({
+        success: session.payment_status === 'paid',
+        status: session.status
+      })
+    } catch (e) {
+      return res.status(400).json({ error: 'Session not found' })
+    }
   }
   
   // Webhook
   if (pathname.match(/^\/api\/payment\/webhook/)) {
     try {
+      const rawBody = req.body
       const rawBodyStr = typeof rawBody === 'string' ? rawBody : JSON.stringify(rawBody)
       const event = stripe.webhooks.constructEvent(
         rawBodyStr,
