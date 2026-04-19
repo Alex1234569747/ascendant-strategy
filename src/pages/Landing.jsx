@@ -41,7 +41,7 @@ export default function Landing() {
 
           <h1 className="hero-title fade-up">
             We Build Funnels That
-            <span className="hero-accent typewriter"> Print Money</span>
+            <span className="hero-accent typewriter">Print Money</span>
           </h1>
 
           <p className="hero-subtitle fade-up delay-1">
@@ -70,7 +70,7 @@ export default function Landing() {
             </div>
             <div className="trust-item float delay-2">
               <span className="trust-icon">✓</span>
-              <span>3.2x Avg Conversion</span>
+              <span>3.2x Avg. Conversion</span>
             </div>
           </div>
         </div>
@@ -194,7 +194,7 @@ export default function Landing() {
               <h3>Upsell Flows</h3>
               <p>
                 Stop leaving money on the table. Strategic post-purchase sequences that 
-                bump average order value by 40-60%.
+                increase average order value by 40-60%.
               </p>
               <div className="service-features">
                 <span>✓ Order Bumps</span>
@@ -241,8 +241,8 @@ export default function Landing() {
         <div className="testimonial-container">
           <div className="quote-mark">"</div>
           <p className="testimonial-text scale-in">
-            Ascendant Strategy 3x'd our revenue in 90 days. The funnel they built 
-            converts like crazy. Best investment we ever made.
+            Ascendant Strategy tripled our revenue in 90 days. The funnel they built 
+            converts consistently. Best investment we ever made.
           </p>
           <div className="testimonial-author">
             <div className="author-avatar">JD</div>
@@ -313,7 +313,7 @@ export default function Landing() {
           </h2>
           <p className="cta-band-desc fade-up">
             Your competitors are scaling RIGHT NOW. Don't get left behind. 
-            Get your custom funnel strategy in the next 3 minutes.
+            Get your custom funnel strategy in just 3 minutes.
           </p>
           <div className="cta-actions fade-up delay-1">
             <Link to="/quiz" className="cta-main cta-huge pulse-glow">

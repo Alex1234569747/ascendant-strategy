@@ -97,19 +97,28 @@
 }
 
 .nav-container {
-  max-width: 1300px;
+  max-width: 1400px;
   margin: 0 auto;
-  padding: 1rem 2rem;
+  padding: 1rem 3rem;
   display: flex;
   justify-content: space-between;
   align-items: center;
+  gap: 2rem;
 }
 
 .nav-logo {
+  flex-shrink: 0;
+}
+
+.nav-links {
   display: flex;
   align-items: center;
-  gap: 0.6rem;
-  text-decoration: none;
+  gap: 2rem;
+  flex-wrap: nowrap;
+}
+
+.nav-cta {
+  flex-shrink: 0;
 }
 
 .nav-logo-icon {
@@ -128,12 +137,6 @@
 .nav-logo-text em {
   font-style: normal;
   color: var(--red);
-}
-
-.nav-links {
-  display: flex;
-  align-items: center;
-  gap: 2.5rem;
 }
 
 .nav-link {
