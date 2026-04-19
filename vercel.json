@@ -8,6 +8,6 @@
     { "src": "/api/payment/verify/:sessionId", "dest": "/api/payment.js" },
     { "src": "/api/payment/webhook", "dest": "/api/payment.js" },
     { "src": "/api/payment/test", "dest": "/api/payment.js" },
-    { "src": "/(.*)", "dest": "/frontend/dist/$1" }
+    { "src": "/(.*)", "dest": "/dist/$1" }
   ]
 }
