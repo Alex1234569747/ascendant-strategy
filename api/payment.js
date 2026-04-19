@@ -27,7 +27,7 @@ export default async function handler(req, res) {
   
   let plan = ''
   let email = ''
-  let parseError = ''
+  let parsed = null
   
   const rawBody = req.body
   if (rawBody && typeof rawBody === 'object') {
@@ -35,28 +35,14 @@ export default async function handler(req, res) {
     if (keys.length === 1) {
       const key = keys[0]
       
-      // The key is: "{\"plan\":\"full\"}"
-      // We need to convert it to valid JSON: {"plan":"full"}
+      // Unescape: "{\"plan\":\"full\"}" → {"plan":"full"}
+      const unescaped = key.replace(/\\"/g, '"')
       
-      // Option 1: Try JSON.parse directly (might work if Vercel fixed it)
       try {
-        const parsed = JSON.parse(key)
+        parsed = JSON.parse(unescaped)
         plan = parsed.plan || ''
         email = parsed.customerEmail || parsed.email || ''
-      } catch (e1) {
-        parseError = e1.message
-        
-        // Option 2: Replace escaped quotes with real quotes
-        try {
-          // "{\"plan\":\"full\"}" → "{"plan":"full"}" → {plan:"full"}
-          const unescaped = key.replace(/\\"/g, '"')
-          const parsed = JSON.parse(unescaped)
-          plan = parsed.plan || ''
-          email = parsed.customerEmail || parsed.email || ''
-        } catch (e2) {
-          parseError += ' | ' + e2.message
-        }
-      }
+      } catch (e) {}
     }
   }
   
@@ -65,10 +51,8 @@ export default async function handler(req, res) {
     return res.json({ 
       status: 'ok',
       plan: plan,
-      success: plan === 'full',
-      error: parseError,
-      keyLength: req.body ? Object.keys(req.body)[0]?.length : 0,
-      keyStart: req.body ? Object.keys(req.body)[0]?.substring(0, 30) : ''
+      parsed: parsed,
+      success: !!parsed
     })
   }
   
