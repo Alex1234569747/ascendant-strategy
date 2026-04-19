@@ -25,7 +25,6 @@ export default async function handler(req, res) {
 
   const pathname = req.url || ''
   
-  // Parse body - handle the Vercel quirk where body is {"key": value}
   let plan = ''
   let email = ''
   
@@ -33,31 +32,26 @@ export default async function handler(req, res) {
   if (rawBody && typeof rawBody === 'object') {
     const keys = Object.keys(rawBody)
     if (keys.length === 1) {
-      // Get the key which is the JSON payload
-      const jsonKey = keys[0]
+      // Unescape the key (Vercel double-escapes)
+      let jsonStr = keys[0]
+        .replace(/\\"/g, '"')
+        .replace(/\\\\/g, '\\')
+      
       try {
-        // Parse the key as JSON
-        const parsed = JSON.parse(jsonKey)
+        const parsed = JSON.parse(jsonStr)
         plan = parsed.plan || ''
         email = parsed.customerEmail || parsed.email || ''
-      } catch (e) {
-        // If parsing key fails, try value
-        const val = rawBody[jsonKey]
-        if (typeof val === 'object') {
-          plan = val.plan || ''
-          email = val.customerEmail || val.email || ''
-        }
-      }
+      } catch (e) {}
     }
   }
   
-  // Debug endpoint
+  // Test endpoint
   if (pathname.match(/^\/api\/payment\/test/)) {
     return res.json({ 
       status: 'ok',
       plan: plan,
       email: email,
-      parsed: plan ? 'SUCCESS' : 'FAILED'
+      success: plan === 'full'
     })
   }
   
