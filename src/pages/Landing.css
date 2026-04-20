@@ -935,7 +935,7 @@ body {
   display: grid;
   grid-template-columns: repeat(2, 1fr);
   gap: 2rem;
-  max-width: 900px;
+  max-width: 1000px;
   margin: 0 auto;
 }
 
@@ -943,35 +943,52 @@ body {
   position: relative;
   background: var(--bg-secondary);
   border: 1px solid var(--border-color);
-  border-radius: var(--radius-xl);
-  padding: 2rem;
+  border-radius: var(--radius-lg);
+  padding: 1.5rem;
   transition: all 0.4s;
 }
 
 .pricing-card.popular {
   border-color: var(--accent-blue);
+  box-shadow: 0 0 30px rgba(59, 130, 246, 0.15);
+}
+
+.popular-badge {
+  position: absolute;
+  top: -12px;
+  left: 50%;
+  transform: translateX(-50%);
+  background: var(--accent-gradient);
+  color: white;
+  padding: 0.4rem 1rem;
+  border-radius: 20px;
+  font-size: 0.7rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
 }
 
 .pricing-name {
-  font-size: 1.25rem;
+  font-size: 1.1rem;
   font-weight: 700;
-  margin-bottom: 1rem;
+  color: var(--text-primary);
+  margin-bottom: 0.75rem;
 }
 
 .pricing-price {
   display: flex;
   align-items: baseline;
   gap: 0.25rem;
-  margin-bottom: 0.5rem;
+  margin-bottom: 0.25rem;
 }
 
 .price-currency {
-  font-size: 1.25rem;
+  font-size: 1rem;
   color: var(--text-muted);
 }
 
 .price-amount {
-  font-size: 3rem;
+  font-size: 2.5rem;
   font-weight: 800;
   background: var(--accent-gradient);
   -webkit-background-clip: text;
@@ -979,30 +996,34 @@ body {
 }
 
 .pricing-original {
-  font-size: 0.85rem;
+  font-size: 0.8rem;
   color: var(--text-muted);
-  margin-bottom: 1.5rem;
+  margin-bottom: 1rem;
 }
 
 .pricing-features {
   list-style: none;
-  margin-bottom: 1.5rem;
+  margin-bottom: 1.25rem;
+  padding: 0;
 }
 
 .pricing-features li {
   display: flex;
-  align-items: center;
-  gap: 0.75rem;
-  padding: 0.5rem 0;
-  font-size: 0.9rem;
+  align-items: flex-start;
+  gap: 0.5rem;
+  padding: 0.35rem 0;
+  font-size: 0.8rem;
   color: var(--text-secondary);
+  line-height: 1.4;
 }
 
 .pricing-features svg {
-  width: 18px;
-  height: 18px;
+  width: 14px;
+  height: 14px;
   color: #22c55e;
   flex-shrink: 0;
+  margin-top: 2px;
+}
 }
 
 .pricing-footer {
