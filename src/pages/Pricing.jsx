@@ -133,7 +133,7 @@ export default function Pricing() {
               background: '#fff', 
               border: service.recommended ? '2px solid #dc2626' : '1px solid rgba(0,0,0,0.08)', 
               borderRadius: '24px', 
-              padding: '2.5rem',
+              padding: '2rem',
               display: 'flex',
               flexDirection: 'column',
               position: 'relative',
@@ -175,19 +175,40 @@ export default function Pricing() {
                 {service.spotsLeft <= 2 ? '🚨 ' : ''}{service.spotsLeft} spots left
               </div>
 
-              <div style={{ marginBottom: '1.5rem' }}>
-                <span style={{ fontSize: '0.7rem', color: '#dc2626', textTransform: 'uppercase', letterSpacing: '0.1em', fontWeight: 600 }}>
-                  {service.tagline}
-                </span>
-                <h3 style={{ fontSize: '1.4rem', marginBottom: '0.5rem', fontFamily: 'Space Grotesk, sans-serif', fontWeight: 600 }}>{service.name}</h3>
-                <p style={{ color: '#71717a', fontSize: '0.9rem', lineHeight: 1.5 }}>{service.desc}</p>
-              </div>
+              <span style={{ fontSize: '0.7rem', color: '#dc2626', textTransform: 'uppercase', letterSpacing: '0.1em', fontWeight: 600 }}>
+                {service.tagline}
+              </span>
+              <h3 style={{ fontSize: '1.4rem', marginBottom: '0.5rem', fontFamily: 'Space Grotesk, sans-serif', fontWeight: 600 }}>{service.name}</h3>
               
-              {/* Pricing */}
+              {/* CTA Button at TOP - HUGE and OBVIOUS */}
+              <Link 
+                to={`/payment?plan=${service.id}`}
+                style={{ 
+                  display: 'block',
+                  padding: '1.25rem',
+                  background: '#dc2626',
+                  border: 'none',
+                  color: '#fff',
+                  fontWeight: 700,
+                  fontSize: '1.1rem',
+                  textAlign: 'center',
+                  borderRadius: '10px',
+                  textDecoration: 'none',
+                  textTransform: 'uppercase',
+                  letterSpacing: '0.03em',
+                  transition: 'all 0.3s',
+                  boxShadow: '0 6px 25px rgba(220, 38, 38, 0.4)',
+                  marginBottom: '1.5rem'
+                }}
+              >
+                Get Started Now
+              </Link>
+              
+              {/* Pricing - Right under the button */}
               <div style={{ marginBottom: '1.5rem', paddingBottom: '1.5rem', borderBottom: '1px solid rgba(0,0,0,0.08)' }}>
                 <div style={{ display: 'flex', alignItems: 'baseline', gap: '0.5rem' }}>
                   <span style={{ color: '#dc2626', fontSize: '1.25rem', fontWeight: 600 }}>NZ$</span>
-                  <span style={{ fontSize: '3.5rem', fontWeight: 700, fontFamily: 'Space Grotesk, sans-serif' }}>{service.price}</span>
+                  <span style={{ fontSize: '3rem', fontWeight: 700, fontFamily: 'Space Grotesk, sans-serif' }}>{service.price}</span>
                 </div>
                 <div style={{ display: 'flex', alignItems: 'center', gap: '0.75rem', marginTop: '0.5rem' }}>
                   <span style={{ 
@@ -209,7 +230,7 @@ export default function Pricing() {
               {/* Features */}
               <ul style={{ listStyle: 'none', flex: 1, marginBottom: '1.5rem' }}>
                 {service.features.map((f, i) => (
-                  <li key={i} style={{ display: 'flex', alignItems: 'flex-start', gap: '0.75rem', padding: '0.6rem 0', fontSize: '0.9rem' }}>
+                  <li key={i} style={{ display: 'flex', alignItems: 'flex-start', gap: '0.75rem', padding: '0.5rem 0', fontSize: '0.85rem' }}>
                     <span style={{ color: '#dc2626', fontWeight: 700, flexShrink: 0 }}>✓</span>
                     {f}
                   </li>
@@ -221,22 +242,22 @@ export default function Pricing() {
                 background: 'rgba(220, 38, 38, 0.05)', 
                 border: '1px solid rgba(220, 38, 38, 0.15)',
                 borderRadius: '12px',
-                padding: '1rem',
-                marginBottom: '1.5rem'
+                padding: '0.75rem',
+                marginBottom: '1rem'
               }}>
                 <div style={{ 
                   color: '#dc2626', 
-                  fontSize: '0.8rem', 
+                  fontSize: '0.75rem', 
                   fontWeight: 700, 
-                  marginBottom: '0.75rem',
+                  marginBottom: '0.5rem',
                   textTransform: 'uppercase'
                 }}>
-                  🎁 Exclusive Bonuses
+                  🎁 Bonuses
                 </div>
                 {service.bonuses.map((bonus, i) => (
                   <div key={i} style={{ 
-                    fontSize: '0.85rem', 
-                    padding: '0.35rem 0',
+                    fontSize: '0.8rem', 
+                    padding: '0.25rem 0',
                     color: '#52525b'
                   }}>
                     {bonus}
@@ -249,47 +270,23 @@ export default function Pricing() {
                 background: 'rgba(220, 38, 38, 0.05)', 
                 borderRadius: '8px',
                 padding: '0.75rem',
-                marginBottom: '1.5rem',
                 textAlign: 'center'
               }}>
-                <span style={{ color: '#dc2626', fontSize: '0.85rem' }}>🛡️ {service.guarantee}</span>
+                <span style={{ color: '#dc2626', fontSize: '0.8rem' }}>🛡️ {service.guarantee}</span>
               </div>
-
-              {/* CTA Button - RED, SOLID, OBVIOUS */}
-              <Link 
-                to={`/payment?plan=${service.id}`}
-                style={{ 
-                  display: 'block',
-                  padding: '1.25rem',
-                  background: '#dc2626',
-                  border: 'none',
-                  color: '#fff',
-                  fontWeight: 700,
-                  fontSize: '1.1rem',
-                  textAlign: 'center',
-                  borderRadius: '10px',
-                  textDecoration: 'none',
-                  textTransform: 'uppercase',
-                  letterSpacing: '0.03em',
-                  transition: 'all 0.3s',
-                  boxShadow: '0 6px 25px rgba(220, 38, 38, 0.4)'
-                }}
-              >
-                Get Started Now
-              </Link>
 
               {/* Trust badges */}
               <div style={{ 
                 display: 'flex', 
                 justifyContent: 'center', 
-                gap: '1.5rem', 
+                gap: '1rem', 
                 marginTop: '1rem',
                 paddingTop: '1rem',
                 borderTop: '1px solid rgba(0,0,0,0.05)'
               }}>
-                <span style={{ color: '#71717a', fontSize: '0.75rem' }}>🔒 Secure</span>
-                <span style={{ color: '#71717a', fontSize: '0.75rem' }}>✓ Verified</span>
-                <span style={{ color: '#71717a', fontSize: '0.75rem' }}>⭐ 5-Star</span>
+                <span style={{ color: '#71717a', fontSize: '0.7rem' }}>🔒 Secure</span>
+                <span style={{ color: '#71717a', fontSize: '0.7rem' }}>✓ Verified</span>
+                <span style={{ color: '#71717a', fontSize: '0.7rem' }}>⭐ 5-Star</span>
               </div>
             </div>
           ))}
