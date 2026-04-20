@@ -4,9 +4,8 @@
   left: 0;
   right: 0;
   height: 72px;
-  background: rgba(255, 255, 255, 0.98);
-  backdrop-filter: blur(20px);
-  border-bottom: 2px solid rgba(220, 38, 38, 0.1);
+  background: #000;
+  border-bottom: 2px solid #333;
   z-index: 100;
 }
 
@@ -37,7 +36,7 @@
 }
 
 .logo-text {
-  color: #18181b;
+  color: #fff;
 }
 
 .red-text {
@@ -53,7 +52,7 @@
 .nav-link {
   font-size: 0.85rem;
   font-weight: 600;
-  color: #71717a;
+  color: #999;
   text-decoration: none;
   text-transform: uppercase;
   letter-spacing: 0.05em;
