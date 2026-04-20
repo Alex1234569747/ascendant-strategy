@@ -348,6 +348,43 @@ body {
   border-color: var(--border-hover);
 }
 
+/* Pricing Card Buttons - Make them RED and obvious */
+.pricing-card .cta-primary,
+.pricing-card .cta-secondary {
+  display: block;
+  width: 100%;
+  text-align: center;
+  padding: 1rem 1.5rem;
+  font-size: 1rem;
+  font-weight: 700;
+  border-radius: 8px;
+  transition: all 0.3s;
+}
+
+.pricing-card .cta-primary {
+  background: #dc2626;
+  color: white;
+  box-shadow: 0 4px 15px rgba(220, 38, 38, 0.4);
+}
+
+.pricing-card .cta-primary:hover {
+  background: #b91c1c;
+  transform: translateY(-2px);
+  box-shadow: 0 8px 25px rgba(220, 38, 38, 0.5);
+}
+
+.pricing-card .cta-secondary {
+  background: transparent;
+  color: var(--text-secondary);
+  border: 2px solid var(--border-color);
+}
+
+.pricing-card .cta-secondary:hover {
+  background: var(--bg-card);
+  border-color: var(--text-muted);
+  color: var(--text-primary);
+}
+
 .hero-stats {
   display: flex;
   gap: 2rem;
