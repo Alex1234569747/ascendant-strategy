@@ -1,5 +1,6 @@
 import { useState } from 'react'
 import { Link } from 'react-router-dom'
+import { Helmet } from 'react-helmet-async'
 
 export default function Contact() {
   const [form, setForm] = useState({ name: '', email: '', subject: '', message: '' })
@@ -12,6 +13,15 @@ export default function Contact() {
 
   return (
     <div style={{ minHeight: '100vh', background: '#fafafa', color: '#18181b' }}>
+      <Helmet>
+        <title>Contact Ascendant Strategy | Sales Funnel Agency NZ</title>
+        <meta name="description" content="Get in touch with our NZ funnel agency. We respond within 24 hours. Questions about pricing, services, or custom projects welcome." />
+        <link rel="canonical" href="https://ascendant.company/contact" />
+        <meta property="og:title" content="Contact Ascendant Strategy" />
+        <meta property="og:description" content="Questions about our funnel services? Get in touch and we'll respond within 24 hours." />
+        <meta property="og:url" content="https://ascendant.company/contact" />
+      </Helmet>
+
       {/* Header */}
       <nav style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', padding: '1.25rem 2rem', background: '#fff', borderBottom: '1px solid rgba(0,0,0,0.05)' }}>
         <Link to="/" style={{ display: 'flex', alignItems: 'center', gap: '0.5rem', textDecoration: 'none', color: '#18181b', fontFamily: 'Space Grotesk, sans-serif', fontSize: '1.2rem', fontWeight: 700 }}>

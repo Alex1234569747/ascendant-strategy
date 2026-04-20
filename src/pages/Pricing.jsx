@@ -1,4 +1,5 @@
 import { Link } from 'react-router-dom'
+import { Helmet } from 'react-helmet-async'
 
 const SERVICES = [
   {
@@ -97,6 +98,15 @@ const SERVICES = [
 export default function Pricing() {
   return (
     <div style={{ minHeight: '100vh', background: '#fafafa', color: '#18181b' }}>
+      <Helmet>
+        <title>Sales Funnel Pricing | Strategy Sessions from $150 NZD | Ascendant Strategy</title>
+        <meta name="description" content="Transparent funnel pricing from $150-$1,500 NZD. Strategy sessions, full implementation, and growth partnerships for ambitious NZ businesses. 100% money-back guarantee." />
+        <link rel="canonical" href="https://ascendant.company/pricing" />
+        <meta property="og:title" content="Sales Funnel Pricing | Ascendant Strategy" />
+        <meta property="og:description" content="Strategy sessions from $150, full funnel implementation from $750. Choose the package that fits your goals." />
+        <meta property="og:url" content="https://ascendant.company/pricing" />
+      </Helmet>
+      
       {/* Header */}
       <nav style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', padding: '1.25rem 2rem', background: '#fff', borderBottom: '1px solid rgba(0,0,0,0.05)' }}>
         <Link to="/" style={{ display: 'flex', alignItems: 'center', gap: '0.5rem', textDecoration: 'none', color: '#18181b', fontFamily: 'Space Grotesk, sans-serif', fontSize: '1.2rem', fontWeight: 700 }}>
@@ -115,10 +125,10 @@ export default function Pricing() {
             🔥 Only {SERVICES.reduce((acc, s) => acc + s.spotsLeft, 0)} spots remaining this month
           </div>
           <h1 style={{ fontSize: 'clamp(2.5rem, 5vw, 3.5rem)', fontFamily: 'Space Grotesk, sans-serif', marginBottom: '1rem', fontWeight: 700 }}>
-            Your Complete <span style={{ color: '#dc2626' }}>Sales Machine</span>
+            Sales Funnel Pricing | Funnel Strategy Sessions from $150 NZD
           </h1>
           <p style={{ color: '#71717a', fontSize: '1.1rem', marginBottom: '1.5rem', maxWidth: '600px', margin: '0 auto 1.5rem' }}>
-            From cold traffic to paying customer — we build the entire automated funnel system.
+            From cold traffic to paying customer — we build the entire automated funnel system. Strategy sessions, full implementation, and ongoing growth partnerships.
           </p>
           <div style={{ display: 'inline-flex', alignItems: 'center', gap: '0.5rem', background: 'rgba(220, 38, 38, 0.08)', padding: '0.75rem 1.5rem', borderRadius: '50px' }}>
             <span>💰</span>

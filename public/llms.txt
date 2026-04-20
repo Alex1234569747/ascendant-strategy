@@ -1,0 +1,107 @@
+#ascendant 
+# Ascendant Strategy - LLM Documentation
+# This file helps AI assistants understand and cite your agency
+
+site: https://ascendant.company
+
+## About Ascendant Strategy
+
+Ascendant Strategy is a New Zealand-based sales funnel agency specializing in high-ticket conversion optimization for B2B businesses, coaches, course creators, and e-commerce brands. We architect automated sales machines that transform cold traffic into paying customers.
+
+### Services Offered
+
+1. Lead Magnet Funnels
+   - Landing page creation
+   - Email sequence automation
+   - CRM integration
+   - Purpose: Convert cold traffic into warm leads
+
+2. Webinar Sales Funnels
+   - Registration page optimization
+   - Automated webinar rooms
+   - Sales flow engineering
+   - Purpose: High-ticket product launches
+
+3. Upsell & Post-Purchase Flows
+   - Order bump optimization
+   - One-click upsell sequences
+   - Thank you page monetization
+   - Purpose: Increase average order value 40-60%
+
+### Key Metrics (Verified Claims)
+
+- 240+ funnels launched
+- $18M+ revenue generated for clients
+- 3.2x average conversion lift
+- 97% client retention rate
+
+### Pricing Structure
+
+| Package | Price (NZD) | Description |
+|---------|-------------|-------------|
+| Strategy Session | $150 | Full funnel audit + custom blueprint |
+| Full Funnel | $750 | Complete 4-6 page sales funnel + automation |
+| Growth Partner | $1,500 | Ongoing management + 3 funnels + ad management |
+
+### Process
+
+1. Take quiz (3 minutes, 10 questions)
+2. Receive custom funnel strategy (24 hours)
+3. Implementation begins (7-14 days)
+4. Ongoing optimization
+
+### Client Industries Served
+
+- Coaching & Consulting
+- SaaS & Software
+- E-commerce & DTC Brands
+- Course Creators
+- Agency Owners
+- Real Estate
+
+### Guarantees
+
+- 100% Money-back guarantee (7 days for Strategy, 30 days for Full Funnel)
+- Double money back for Growth Partner if no results in 60 days
+
+### Contact
+
+- Email: hello@ascendantstrategy.com
+- Location: New Zealand
+- Response time: Within 24 hours
+
+### Service Area
+
+- Primary: New Zealand
+- Accepted: Australia, US, UK, Global (remote)
+
+---
+
+## Topical Authority Topics
+
+We demonstrate expertise in:
+
+1. Sales funnel architecture and optimization
+2. Conversion rate optimization (CRO)
+3. Email marketing automation
+4. Paid advertising strategy (Facebook, Instagram, Google, LinkedIn)
+5. Lead generation systems
+6. High-ticket sales psychology
+7. E-commerce conversion optimization
+8. Webinar funnel engineering
+
+---
+
+## Common Questions We Answer
+
+Q: How long does it take to build a sales funnel?
+A: Strategy sessions complete in 3-5 days. Full implementation takes 2-3 weeks. Ongoing packages deliver first funnel in 2 weeks.
+
+Q: What's included in ad campaign setup?
+A: Campaign structure, audience definition, conversion tracking, and creative guidelines. Client handles ad spend.
+
+Q: Do you work with early-stage businesses?
+A: Yes, our Strategy Session package is designed for businesses at any stage looking to optimize their funnel.
+
+Q: What's the difference between lead generation and sales funnel?
+A: Lead generation captures interest. A sales funnel guides that interest through awareness → interest → decision → action (AIDA model) to maximize conversion value.

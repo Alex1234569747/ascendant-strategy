@@ -1,0 +1,15 @@
+# Ascendant Strategy Sitemap
+# https://ascendant.company
+
+User-agent: *
+Allow: /
+
+# Sitemap location
+Sitemap: https://ascendant.company/sitemap.xml
+
+# Crawl delay (optional, be considerate)
+Crawl-delay: 1
+
+# Block API routes from indexing
+Disallow: /api/
+Disallow: /payment*

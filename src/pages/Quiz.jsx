@@ -1,5 +1,6 @@
 import { useState } from 'react'
 import { Link, useNavigate } from 'react-router-dom'
+import { Helmet } from 'react-helmet-async'
 
 const BUSINESS_TYPES = [
   { value: 'coaching', label: 'Coaching / Consulting' },
@@ -193,6 +194,10 @@ export default function Quiz() {
 
     return (
       <div style={{ minHeight: '100vh', background: '#fafafa', color: '#18181b', padding: '4rem 1.5rem' }}>
+        <Helmet>
+          <title>Your Funnel Strategy | Ascendant Strategy</title>
+          <meta name="description" content="Based on your quiz results, here's the perfect funnel strategy for your business." />
+        </Helmet>
         <div style={{ maxWidth: '1200px', margin: '0 auto' }}>
           <div style={{ textAlign: 'center', marginBottom: '3rem' }}>
             <div style={{ color: '#dc2626', fontSize: '0.8rem', marginBottom: '1rem', textTransform: 'uppercase', letterSpacing: '0.1em', fontWeight: 600 }}>
@@ -206,7 +211,6 @@ export default function Quiz() {
             </p>
           </div>
 
-          {/* Summary Cards */}
           <div style={{ display: 'grid', gridTemplateColumns: 'repeat(3, 1fr)', gap: '1.5rem', marginBottom: '4rem' }}>
             <div style={{ background: '#fff', border: '1px solid rgba(0,0,0,0.08)', borderRadius: '16px', padding: '2rem', textAlign: 'center' }}>
               <div style={{ fontSize: '2rem', marginBottom: '1rem' }}>🎯</div>
@@ -228,7 +232,6 @@ export default function Quiz() {
 
           <h2 style={{ textAlign: 'center', fontSize: '2rem', marginBottom: '2rem', fontFamily: 'Space Grotesk, sans-serif' }}>Choose Your Package</h2>
           
-          {/* Pricing Cards */}
           <div style={{ display: 'grid', gridTemplateColumns: 'repeat(3, 1fr)', gap: '2rem', marginBottom: '3rem' }}>
             {SERVICES.map((service) => (
               <div key={service.id} style={{ 
@@ -369,6 +372,15 @@ export default function Quiz() {
 
   return (
     <div style={{ minHeight: '100vh', background: '#fafafa', color: '#18181b', padding: '4rem 1.5rem' }}>
+      <Helmet>
+        <title>Free Funnel Strategy Quiz | Get Your Custom Sales Plan | Ascendant Strategy</title>
+        <meta name="description" content="Take our free 3-minute quiz and get a custom sales funnel strategy tailored to your business. No commitment required. Funnel assessment for NZ businesses." />
+        <link rel="canonical" href="https://ascendant.company/quiz" />
+        <meta property="og:title" content="Free Funnel Strategy Quiz | Ascendant Strategy" />
+        <meta property="og:description" content="3 minutes. 10 questions. Get your custom funnel strategy. 100% free, no commitment." />
+        <meta property="og:url" content="https://ascendant.company/quiz" />
+      </Helmet>
+      
       <div style={{ maxWidth: '700px', margin: '0 auto' }}>
         <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '2rem' }}>
           <Link to="/" style={{ display: 'flex', alignItems: 'center', gap: '0.5rem', textDecoration: 'none', color: '#18181b', fontFamily: 'Space Grotesk, sans-serif', fontSize: '1.1rem', fontWeight: 700 }}>
