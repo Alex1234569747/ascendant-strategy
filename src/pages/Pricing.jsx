@@ -255,26 +255,27 @@ export default function Pricing() {
                 <span style={{ color: '#dc2626', fontSize: '0.85rem' }}>🛡️ {service.guarantee}</span>
               </div>
 
-              {/* CTA Button */}
+              {/* CTA Button - RED, SOLID, OBVIOUS */}
               <Link 
                 to={`/payment?plan=${service.id}`}
                 style={{ 
                   display: 'block',
                   padding: '1.25rem',
-                  background: service.recommended ? '#dc2626' : 'transparent',
-                  border: '2px solid #dc2626',
-                  color: service.recommended ? '#fff' : '#dc2626',
+                  background: '#dc2626',
+                  border: 'none',
+                  color: '#fff',
                   fontWeight: 700,
-                  fontSize: '1rem',
+                  fontSize: '1.1rem',
                   textAlign: 'center',
-                  borderRadius: '12px',
+                  borderRadius: '10px',
                   textDecoration: 'none',
                   textTransform: 'uppercase',
-                  letterSpacing: '0.05em',
-                  transition: 'all 0.3s'
+                  letterSpacing: '0.03em',
+                  transition: 'all 0.3s',
+                  boxShadow: '0 6px 25px rgba(220, 38, 38, 0.4)'
                 }}
               >
-                Get Started Now →
+                Get Started Now
               </Link>
 
               {/* Trust badges */}
